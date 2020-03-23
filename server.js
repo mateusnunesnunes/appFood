@@ -16,7 +16,7 @@ var con = mysql.createConnection({
     database:'appFoods'
 });
 
-var server = app.listen(4547,function(){
+var server = app.listen(4548,function(){
     var host = server.address().address
     var port = server.address().port
     console.log("start");
@@ -38,8 +38,16 @@ try {
     });
 } catch (error) {
     console.log('There has been a problem with your fetch operation: ' + error.message);
-}
-
-    
+} 
 });
 
+app.get('/insertUser',function(req,res){
+    try {
+        con.query('INSERT INTO `Users` (`nome`,`email`,`idade`) VALUES ("Dalhe","Vivamus.molestie@penatibusetmagnis.org",9)')
+        res.json(results);
+    
+    
+    } catch(err) {
+        console.log('There has been a problem with your fetch operation: ' + err.message);
+    }
+});
