@@ -10,6 +10,7 @@
   "dependencies": {
     "expo": "~36.0.0",
     "fatsecret": "^1.0.2",
+    "mysql": "^2.18.1",
     "mysqli": "^3.0.11",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",

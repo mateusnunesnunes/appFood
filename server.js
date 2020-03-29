@@ -41,13 +41,16 @@ try {
 } 
 });
 
-app.get('/insertUser',function(req,res){
+app.get('/insertUser/:name/:email/:idade', async (req, res, next) =>{
     try {
-        con.query('INSERT INTO `Users` (`nome`,`email`,`idade`) VALUES ("Dalhe","Vivamus.molestie@penatibusetmagnis.org",9)')
-        res.json(results);
-    
-    
-    } catch(err) {
-        console.log('There has been a problem with your fetch operation: ' + err.message);
-    }
+        con.query("INSERT INTO `Users` (`nome`,`email`,`idade`) VALUES ('"+req.params.name+"','"+req.params.email+"','"+req.params.idade+"')",function (error,rows,fields) {
+            if(error) console.log(error);
+            else{
+                console.log(rows);
+                res.send('success');
+            }
+        });
+    } catch (error) {
+        console.log('There has been a problem with your fetch operation: ' + error.message);
+    } 
 });
