@@ -8,14 +8,17 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "cron": "^1.8.2",
     "expo": "~36.0.0",
     "fatsecret": "^1.0.2",
     "mysql": "^2.18.1",
     "mysqli": "^3.0.11",
+    "nodemailer": "^6.4.6",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-web": "~0.11.7",
+    "uniqid": "^5.2.0",
     "yarn": "^1.22.4"
   },
   "devDependencies": {
