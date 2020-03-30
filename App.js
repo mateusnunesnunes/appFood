@@ -14,7 +14,7 @@ export default class App extends Component{
   }
 
   loadFoods = (params) => {
-    fetch('http://192.168.0.103:1337/foods/search/'+params+'/1/25')
+    fetch('http://192.168.100.4:1337/foods/search/'+params+'/1/25')
     .then(res => res.json() )
     .then(res => {
       this.setState({
