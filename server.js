@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 var con = mysql.createConnection({
     host :'localhost',
-    port:'8889',
+    port:'3306',
     user:'root',
     password:'root',
     database:'appFoods'
