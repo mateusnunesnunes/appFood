@@ -12,14 +12,10 @@ app.get('/foods/search/:name/:pageNumber/:maxResults', async (req, res, next) =>
       max_results: req.params.maxResults
     });
     res.json(results);
-    
-    
   } catch(err) {
     next(err);
   }
 });
-
-
 app.listen(1337, () => {
   console.log('listening on 1337');
 });

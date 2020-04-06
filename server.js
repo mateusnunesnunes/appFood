@@ -13,7 +13,6 @@ var con = mysql.createConnection({
     password:'root',
     database:'appFoods',
     multipleStatements: true
-
 });
 //Configuração Porta
 var server = app.listen(4548,function(){
@@ -54,18 +53,25 @@ try {
 } 
 });
 
-
 //Registro
-app.get('/register/:name/:email/:idade', async (req, res, next) =>{
-
+app.get('/register/:name/:email/:idade/:senha/:peso/:objetivo', async (req, res, next) =>{
     try {
-        con.query("select * from Users where nome = '"+[req.params.nome]+"'",function (error,rows,fields) {
-            if (!req.params.nome) {
-                res.send('Parametro errado => /users/nome');
-                return;
-            }
+        con.query("select * from Users where nome = '"+[req.params.name]+"'",function (error,rows,fields) {
             if (rows.length == 0){
-                res.send('null');
+                try {
+                    con.query("INSERT INTO `Users` (`nome`,`email`,`idade`,`senha`,`peso`,`objetivo`) VALUES ('"+req.params.name+"','"+req.params.email+"','"+req.params.idade+"','"+req.params.senha+"','"+req.params.peso+"','"+req.params.objetivo+"')",function (error,rows,fields) {
+                        if(error){
+                            console.log(error);
+                            res.send('error');
+                        }
+                        else{
+                            console.log(rows);
+                            res.send('success');
+                        }
+                    });
+                } catch (error) {
+                    console.log('There has been a problem with your fetch operation: ' + error.message);
+                } 
             }
             else{
                 if(error){
@@ -74,7 +80,7 @@ app.get('/register/:name/:email/:idade', async (req, res, next) =>{
                 } 
                 else{
                     console.log(rows);
-                    res.send(rows);
+                    res.send('Usuario já existe');
                 }
             }
             
@@ -82,21 +88,29 @@ app.get('/register/:name/:email/:idade', async (req, res, next) =>{
     } catch (error) {
         console.log('There has been a problem with your fetch operation: ' + error.message);
     } 
+});
 
 
-
-    // try {
-    //     con.query("INSERT INTO `Users` (`nome`,`email`,`idade`) VALUES ('"+req.params.name+"','"+req.params.email+"','"+req.params.idade+"')",function (error,rows,fields) {
-    //         if(error){
-    //             console.log(error);
-    //             res.send('error');
-    //         }
-    //         else{
-    //             console.log(rows);
-    //             res.send('success');
-    //         }
-    //     });
-    // } catch (error) {
-    //     console.log('There has been a problem with your fetch operation: ' + error.message);
-    // } 
+//Login SELECT * FROM Users WHERE nome = 'name' AND senha = 'password'
+app.get('/login/:name/:senha', async (req, res, next) =>{
+    try {
+        con.query("SELECT * FROM Users WHERE nome = '"+req.params.name+"' AND senha = '"+req.params.senha+"'",function (error,rows,fields) {
+            if (rows.length == 0){
+                res.send('Login falho');
+            }
+            else{
+                if(error){
+                    console.log(error);
+                    res.send('error');
+                } 
+                else{
+                    console.log(rows);
+                    res.send('sucess');
+                }
+            }
+            
+        });
+    } catch (error) {
+        console.log('There has been a problem with your fetch operation: ' + error.message);
+    } 
 });
