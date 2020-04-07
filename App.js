@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,FlatList,TextInput} from 'react-native';
-import DetalhesCardapio from './DetalhesCardapio';
-import DetalhesDiaDoCardapio from './DetalhesDiaDoCardapio';
-import DetalhesRefeicao from './DetalhesRefeicao';
 
 export default class App extends Component{
 
@@ -17,7 +14,7 @@ export default class App extends Component{
   }
 
   loadFoods = (params) => {
-    fetch('http://192.168.0.103:1337/foods/search/'+params+'/1/25')
+    fetch('http://192.168.100.4:1337/foods/search/'+params+'/1/25')
     .then(res => res.json() )
     .then(res => {
       this.setState({
@@ -25,12 +22,34 @@ export default class App extends Component{
       })
     })
   }
-  //<DetalhesCardapio></DetalhesCardapio>
-  // <DetalhesDiaDoCardapio></DetalhesDiaDoCardapio> - arrumar a imagem grande
-  // <DetalhesRefeicao></DetalhesRefeicao> - em andamento
+
   render() {
     return (
-      <DetalhesCardapio></DetalhesCardapio>
+      <View style={styles.container} >
+       <TextInput
+          style={styles.input}
+          placeholder="Pesquise a comida!"
+          onChangeText={(text) => this.setState({text}) }
+          onEndEditing={(text) => this.loadFoods(this.state.text)}
+          value={this.state.text}
+        />
+         <View  style={styles.containerIn}>
+          
+          <FlatList
+          data={this.state.data}
+          renderItem={({item}) => (
+            <View style={styles.flatview} >
+                  <View>
+                      <Text style={styles.name}>{item.food_name}</Text>
+                      <Text style={styles.email}>{item.food_description}</Text>
+                  </View>
+            </View>
+          )}
+          keyExtractor={item => item.food_id}
+        />
+
+        </View>
+      </View>
     );
   }
 }
