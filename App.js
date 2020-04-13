@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet,View, StatusBar, SafeAreaView, ScrollView} from 'react-native';
-import statusLogin from './StatusLogin.js';
-import Login from './Login';
-import Cadastro from './Cadastro';
+
+import {Platform, StyleSheet, Text, View,Image,FlatList,TextInput} from 'react-native';
+import DetalhesCardapio from './DetalhesCardapio';
+import DetalhesDiaDoCardapio from './DetalhesDiaDoCardapio';
+import DetalhesRefeicao from './DetalhesRefeicao';
+import PerfilDoUsuario from "./PerfilDoUsuario";
+
 
 //import {NavigationContainer} from '@react-navigation/native';
 //import {createStackNavigator} from '@react-navigation/stack';
@@ -19,21 +22,20 @@ export default class App extends Component{
   }
 
   loadFoods = (params) => {
-    fetch('http://127.0.0.1:1337/foods/search/'+params+'/1/25')
-    .then(res => res.json() )
+    fetch('http://127.0.0.1:1337/foods/search/'+params+'/1/25').then(res => res.json() )
     .then(res => {
       this.setState({
         data:res.foods.food || []
       })
     })
   }
-
+  //<DetalhesCardapio></DetalhesCardapio>
+  // <DetalhesDiaDoCardapio></DetalhesDiaDoCardapio> - arrumar a imagem grande
+  // <DetalhesRefeicao></DetalhesRefeicao> - em andamento
   render() {
     return (
-      <Cadastro />
+
+      <DetalhesDiaDoCardapio></DetalhesDiaDoCardapio>
     );
   }
 }
-const styles = StyleSheet.create({
-  
-});
