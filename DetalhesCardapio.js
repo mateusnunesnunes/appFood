@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text,TouchableOpacity, SafeAreaView,View,Image,FlatList,TextInput, TouchableWithoutFeedback, ViewBase} from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation'; 
 import TituloEImagemCardapio from './TituloEImagemCardapio';
 import DetalhesCelula from './DetalhesCelula.js';
 
@@ -40,8 +39,8 @@ export default class DetalhesCardapio extends Component{
             style={{top:"90%",paddingBottom:5}}
             renderItem={({ item }) => {
               return (
-                <TouchableOpacity style={{flex:1}} onPress={() => this.props.navigation.navigate('Profile')} >
-                  <View style={{flex:1}}>
+                <TouchableOpacity style={{flex:1}} onPress={this.function} >
+                  <View style={{flex:1,paddingBottom:7}}>
                     <DetalhesCelula
                       diaDaSemana = {item.diaDaSemana}
                       descricao = {item.descricao}
@@ -58,32 +57,6 @@ export default class DetalhesCardapio extends Component{
   }
 }
 
-class ProfileScreen extends React.Component {  
-  render() {  
-      return (  
-          <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>  
-              <Text>Profile Screen</Text>  
-          </View>  
-  );  
-  }  
-}  
-
-const AppNavigator = createStackNavigator(  
-  {  
-      Home: HomeScreen,  
-      Profile: ProfileScreen  
-  },  
-  {  
-      initialRouteName: "Home"  
-  }  
-);  
-
-/*const AppContainer = createAppContainer(AppNavigator);  
-export default class App extends React.Component {  
-    render() {  
-        return <AppContainer />;  
-    }  
-}*/  
 
 const styles = StyleSheet.create({
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, SafeAreaView,View,Image,FlatList,TextInput, TouchableWithoutFeedback, ViewBase} from 'react-native';
+import {Platform, StyleSheet, Text,TouchableOpacity, SafeAreaView,View,Image,FlatList,TextInput, TouchableWithoutFeedback, ViewBase} from 'react-native';
 import TituloEImagemCardapio from './TituloEImagemCardapio';
 import DetalhesCelula from './DetalhesCelula.js';
 
@@ -18,10 +18,13 @@ export default class DetalhesDiaDoCardapio extends Component{
       text: ''
     }
   }
+  function(){
+    alert("Clicado");
+  }
 
   render() {
     return (
-        <SafeAreaView >
+        <SafeAreaView>
           <TituloEImagemCardapio
           titulo = {this.state.titulo}
           imagemDoCardapio = {this.state.imagemDoCardapio}
@@ -29,18 +32,19 @@ export default class DetalhesDiaDoCardapio extends Component{
           <FlatList
             data={this.state.data}
             keyExtractor={item => item.id}
-            style={{top:"90%",paddingBottom:5}}
+            style={{top:"102%",paddingBottom:5}}
             renderItem={({ item }) => {
               return (
-                <View style={{flex:1}}>
-                  <DetalhesCelula
-                    diaDaSemana = {item.diaDaSemana}
-                    descricao = {item.descricao}
-                    imagemCelula = {item.imagemCelula}
-                  >
-                  </DetalhesCelula>
-                </View>
-                  
+                <TouchableOpacity style={{flex:1}} onPress={this.function} >
+                  <View style={{flex:1,paddingBottom:7}}>
+                    <DetalhesCelula
+                      diaDaSemana = {item.diaDaSemana}
+                      descricao = {item.descricao}
+                      imagemCelula = {item.imagemCelula}
+                    >
+                    </DetalhesCelula>
+                  </View>
+                </TouchableOpacity>
               );
             }}
           />

@@ -30,10 +30,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white', 
     top: 28, 
     left:1, 
+    height:"76%",
     right: 0, 
     bottom: 40, 
     justifyContent: 'center', 
-    alignItems: 'center'
+    alignItems: 'center',
   },
   viewImagemDoCardapio:{
     height: '90%', 
