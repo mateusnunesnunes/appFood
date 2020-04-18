@@ -16,10 +16,11 @@ export default class DetalhesCardapio extends Component{
   render() {
     return (
         <View style={styles.viewInicial}>
-          <Text style={styles.tituloDoCardapio}>{this.props.titulo}</Text>
+          
           <View style={styles.viewImagemDoCardapio}>
             <Image style={styles.imagemDoCardapio} source={this.props.imagemDoCardapio}></Image>
           </View>
+          <Text style={styles.tituloDoCardapio}>{this.props.titulo}</Text>
         </View>
       );
   }
@@ -28,13 +29,14 @@ const styles = StyleSheet.create({
   viewInicial:{
     position: "absolute",
     backgroundColor: 'white', 
-    top: 28, 
+    top: 0, 
     left:1, 
     height:"76%",
     right: 0, 
     bottom: 40, 
     justifyContent: 'center', 
     alignItems: 'center',
+    paddingTop:10
   },
   viewImagemDoCardapio:{
     height: '90%', 
