@@ -1,14 +1,16 @@
 import React, {Component} from 'react';
 
-import {Platform, StyleSheet, Text, View,Image,FlatList,TextInput} from 'react-native';
+import {Platform, StyleSheet, Text, View,Image,FlatList,TextInput, StatusBar} from 'react-native';
 import DetalhesCardapio from './DetalhesCardapio';
 import DetalhesDiaDoCardapio from './DetalhesDiaDoCardapio';
 import DetalhesRefeicao from './DetalhesRefeicao';
 import PerfilDoUsuario from "./PerfilDoUsuario";
+import Cadastro from './Cadastro';
+import Routes from './src/routes/routes';
 
 
-//import {NavigationContainer} from '@react-navigation/native';
-//import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 export default class App extends Component{
 
@@ -29,13 +31,13 @@ export default class App extends Component{
       })
     })
   }
-  //<DetalhesCardapio></DetalhesCardapio>
-  // <DetalhesDiaDoCardapio></DetalhesDiaDoCardapio> - arrumar a imagem grande
-  // <DetalhesRefeicao></DetalhesRefeicao> - em andamento
+
   render() {
     return (
-
-      <DetalhesDiaDoCardapio></DetalhesDiaDoCardapio>
+      <NavigationContainer>
+        <StatusBar barStyle="light-content" />
+        <Routes />
+      </NavigationContainer>
     );
   }
 }

@@ -69,7 +69,7 @@ export default class Login extends Component{
               </Text>
             </View>
 
-            <TouchableOpacity onPress = {() => {/* do this */}}>
+            <TouchableOpacity onPress = {() => this.props.navigation.navigate('Cadastro') }>
               <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
                             justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2}}
               >

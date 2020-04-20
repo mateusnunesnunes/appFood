@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Image,FlatList,TextInput, Button, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, View,Image,FlatList,TextInput, Button, TouchableOpacity,Alert} from 'react-native';
 
 export default class DadosLogin extends Component{
 
@@ -12,14 +12,31 @@ export default class DadosLogin extends Component{
     }
     this.clickAvancar = this.clickAvancar.bind(this);
     this.clickCancelar = this.clickCancelar.bind(this);
+    this.validarCamposLogin = this.validarCamposLogin.bind(this);
   }
 
   clickAvancar(){
-    this.props._onClickAvancar(this.state.email, this.state.senha, this.state.confirmSenha);
+    if (this.validarCamposLogin()){
+      this.props._onClickAvancar(this.state.email, this.state.senha, this.state.confirmSenha);
+    }
+    
   }
 
   clickCancelar(){
     this.props._onClickCancelar();
+  }
+
+  validarCamposLogin(){
+    let estado = this.state;
+    if(estado.email == "" || estado.senha == "" || estado.confirmSenha == ""){
+      Alert.alert("Atenção", "Preencha todos os campos para continuar");
+      return false;
+    }
+    if (estado.senha != estado.confirmSenha){
+      Alert.alert("Atenção", "As senhas não conferem");
+      return false;
+    }
+    return true;
   }
 
   render() {
@@ -45,6 +62,7 @@ export default class DadosLogin extends Component{
               <Text style={styles.texto}>Senha</Text>
               <TextInput
                   style={styles.input}
+                  secureTextEntry={true}
                   placeholder="Digite sua senha..."
                   placeholderTextColor="#ccc"
                   onChangeText={(senha) => this.setState({senha}) }
@@ -56,6 +74,7 @@ export default class DadosLogin extends Component{
               <Text style={styles.texto}>Confirmar senha</Text>
               <TextInput
                   style={styles.input}
+                  secureTextEntry={true}
                   placeholder="Digite novamente sua senha..."
                   placeholderTextColor="#ccc"
                   onChangeText={(confirmSenha) => this.setState({confirmSenha}) }

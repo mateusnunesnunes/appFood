@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 //Conexao
 var con = mysql.createConnection({
     host :'localhost',
-    port:'3306',
+    port:'8889',
     user:'root',
     password:'root',
     database:'appFoods',
@@ -22,7 +22,7 @@ var server = app.listen(4548,function(){
 });
 //Conexão
 con.connect(function(error){
-    if(error) console.log("erro");
+    if(error) console.log(error);
     else console.log("connected");
 });
 //Seleciona usuarios pelo nome
@@ -81,10 +81,10 @@ app.post('/registerPOST',function(req,res){
         con.query("select * from Users where nome = '"+[req.body.name]+"'",function (error,rows,fields) {
             if (rows.length == 0){
                 try {
-                    con.query("INSERT INTO `Users` (`nome`,`email`,`idade`,`senha`,`peso`,`objetivo`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+req.body.idade+"','"+req.body.senha+"','"+rreq.body.peso+"','"+req.body.objetivo+"')",function (error,rows,fields) {
+                    con.query("INSERT INTO `Users` (`nome`,`email`,`idade`,`senha`,`peso`,`objetivo`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+req.body.idade+"','"+req.body.senha+"','"+req.body.peso+"','"+req.body.objetivo+"')",function (error,rows,fields) {
                         if(error){
                             console.log(error);
-                            res.send('error');
+                            res.send(error);
                         }
                         else{
                             console.log(rows);
@@ -111,4 +111,3 @@ app.post('/registerPOST',function(req,res){
         console.log('There has been a problem with your fetch operation: ' + error.message);
     } 
 })
-

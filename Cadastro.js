@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Platform, View,} from 'react-native';
+import {Platform, View, Alert,} from 'react-native';
 //import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
+
 
 import DadosPerfil from './src/components/DadosPerfil';
 import DadosLogin from './src/components/DadosLogin';
@@ -27,29 +28,44 @@ export default class Cadastro extends Component{
   }
 
   redirectLogin(){
-    //TODO Volta para o Login
+    this.props.navigation.navigate('Login')
   }
 
   cadastrarUsuario(){
-    //TODO Envia dados para o servidor
+    fetch('10.0.2.2:4548/registerPOST', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.senha,
+        name: this.state.nome,
+        idade: this.state.idade,
+        peso:this.state.peso,
+        objetivo: this.state.pesoMeta
+      }),
+    }).then((response) => alert(response)).catch((error) => alert(error));
   }
 
   _onClickAvancar(email, senha, confirmSenha){
+    
     this.setState({showDadosLogin: false, email: email, senha: senha, confirmSenha: confirmSenha});
-    //alert(this.state.email+"  "+this.state.senha+"  "+this.state.confirmSenha)
-    //alert(email+"  "+senha+"  "+confirmSenha)
+    
   }
 
   _onClickCancelar(){
-    alert("cliquei cancelar");
+    this.setState({showDadosLogin: true, email: "", senha: "", confirmSenha: "", nome: "", idade: "", altura: "", peso: "", pesoMeta: ""});
     this.redirectLogin();
   }
 
   _onClickCriarConta(nome, idade, altura, peso, pesoMeta){
-    alert("cliquei criar conta");
+    
     this.setState({showDadosLogin: true, nome: nome, idade: idade, altura: altura, peso: peso, pesoMeta: pesoMeta});
     this.cadastrarUsuario();
     this.redirectLogin();
+    
   }
 
   _onClickVoltar(){
