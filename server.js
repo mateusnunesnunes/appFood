@@ -2,13 +2,16 @@ var express = require('express');
 var app = express();
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 app.use(bodyParser.json({type:'application/json'}));
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(cors());
+var md5 = require('md5');
 
 //Conexao
 var con = mysql.createConnection({
     host :'localhost',
-    port:'3306',
+    port:'8889',
     user:'root',
     password:'root',
     database:'appFoods',
@@ -22,7 +25,7 @@ var server = app.listen(4548,function(){
 });
 //Conexão
 con.connect(function(error){
-    if(error) console.log("erro");
+    if(error) console.log(error);
     else console.log("connected");
 });
 //Seleciona usuarios pelo nome
@@ -54,9 +57,10 @@ app.get('/users/:nome?',function(req,res){
 //Login SELECT * FROM Users WHERE nome = 'name' AND senha = 'password'
 app.post('/login',function(req,res){
   var user_name=req.body.user;
-  var password=req.body.password;
+  let resultado = req.body.senha + req.body.name
+  var passwordHashed = md5(resultado);
   try {
-    con.query("SELECT * FROM Users WHERE nome = '"+user_name+"' AND senha = '"+password+"'",function (error,rows,fields) {
+    con.query("SELECT * FROM Users WHERE nome = '"+user_name+"' AND senha = '"+passwordHashed+"'",function (error,rows,fields) {
         if (rows.length == 0){
             res.send('Login falho');
         }
@@ -76,39 +80,41 @@ app.post('/login',function(req,res){
     } 
 });
 //register POST function, mandar $name $email $idade $senha $peso $objetivo frontend
-app.post('/registerPOST',function(req,res){
+app.post('/register',function(req,res){
+    let resultado = req.body.senha + req.body.name
+    let senhaHashed = md5(resultado);
     try {
         con.query("select * from Users where nome = '"+[req.body.name]+"'",function (error,rows,fields) {
             if (rows.length == 0){
                 try {
-                    con.query("INSERT INTO `Users` (`nome`,`email`,`idade`,`senha`,`peso`,`objetivo`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+req.body.idade+"','"+req.body.senha+"','"+rreq.body.peso+"','"+req.body.objetivo+"')",function (error,rows,fields) {
+                    con.query("INSERT INTO `Users` (`nome`,`email`,`idade`,`senha`,`peso`,`objetivo`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+req.body.idade+"','"+senhaHashed+"','"+req.body.peso+"','"+req.body.objetivo+"')",function (error,rows,fields) {
                         if(error){
                             console.log(error);
-                            res.send('error');
+                            res.json({'error':error});
                         }
                         else{
                             console.log(rows);
-                            res.send('success');
+                            res.json({'sucess':'usuario registrado'});
                         }
                     });
                 } catch (error) {
-                    console.log('There has been a problem with your fetch operation: ' + error.message);
+                    res.json({'error':error});
                 } 
             }
             else{
                 if(error){
-                    console.log(error);
-                    res.send('error');
+                    
+                    res.json({'error':error});
                 } 
                 else{
                     console.log(rows);
-                    res.send('Usuario já existe');
+                    res.json({'erro':'Usuario já existe'});
                 }
             }
             
         });
     } catch (error) {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
+        res.json({'error':error});
     } 
 })
 
