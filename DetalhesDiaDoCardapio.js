@@ -9,12 +9,13 @@ export default class DetalhesDiaDoCardapio extends Component {
     super();
     this.state = {
       data: [
-        { id: "00", diaDaSemana: "Café da Manhã", descricao: "Frango com batatas fritas onduladas e salada", imagemCelula: require("./Imagens/comida.jpg") },
-        { id: "01", diaDaSemana: "Almoço", descricao: "Frango com batatas fritas onduladas e salada", imagemCelula: require("./Imagens/comida.jpg") },
-        { id: "02", diaDaSemana: "Janta", descricao: "Frango com batatas fritas onduladas e salada", imagemCelula: require("./Imagens/comida.jpg") }
+      { id: "00", diaDaSemana: "Manhã", descricao: "Dieta baseada em frango", imagemCelula: require("./Imagens/comida.jpg"),calorias:500,base:"Frango"},
+        { id: "01", diaDaSemana: "Tarde", descricao: "Dieta baseada em carne", imagemCelula: require("./Imagens/comida.jpg"),calorias:1000,base:"Carne"},
+        { id: "02", diaDaSemana: "Noite", descricao: "Dieta baseada em peixe", imagemCelula: require("./Imagens/comida.jpg"),calorias:500,base:"Peixe"}
       ],
       imagemDoCardapio: require("./Imagens/comida.jpg"),
       titulo: 'Segunda-Feira',
+      quantidadeCalorias:'2000',
       text: ''
     }
   }
@@ -28,19 +29,22 @@ export default class DetalhesDiaDoCardapio extends Component {
         <TituloEImagemCardapio
           titulo={this.state.titulo}
           imagemDoCardapio={this.state.imagemDoCardapio}
+          quantidadeCaloria ={this.state.quantidadeCalorias}
         ></TituloEImagemCardapio>
         <FlatList
           data={this.state.data}
           keyExtractor={item => item.id}
-          style={{ top: "80%", paddingBottom: 5,backgroundColor:"white",height:"60%" }}
+          style={{ top: "70%", paddingBottom: 5,backgroundColor:"white",height:"60%" }}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity style={{ flex: 1,backgroundColor:"white" }} onPress={this.function} >
-                <View style={{ flex: 1, paddingBottom: 7,backgroundColor:"white"  }}>
+                <View style={{ flex: 1, justifyContent: 'center',alignItems: 'center',paddingBottom: 5,backgroundColor:"white",paddingTop:5  }}>
                   <DetalhesCelula
                     diaDaSemana={item.diaDaSemana}
                     descricao={item.descricao}
                     imagemCelula={item.imagemCelula}
+                    calorias={item.calorias}
+                    base={item.base}
                   >
                   </DetalhesCelula>
                 </View>

@@ -19,31 +19,27 @@ export default class DetalhesCelula extends Component {
   render() {
     return (
       <View style={styles.viewCelula}>
-        
-        <View style={styles.viewImagemCelula}>
-          <Image style={styles.imagem} source={this.props.imagemCelula}></Image>
-        </View>
-
-        <View style={{ top: 7 }}>
+        <View style={{ top: 7,width:"70%" }}>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
             <View style={{ width: 180 }}>
-              <Text style={styles.titulo}>{this.props.diaDaSemana}</Text>
-            </View>
-            <Text style={styles.descricaoCaloria}>{this.props.calorias + "kcal"}</Text>
+              <Text style={styles.titulo}>{this.props.titulo}</Text>
+            </View>         
           </View>
-
-          <Text style={styles.descricao}>{this.props.descricao}</Text>
-
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', top: 8 }}>
-            <Text style={{left:3}}>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', top: 15 }}>
+            <Text style={{left:10}}>
               <Icon
                 name="silverware-variant"
                 color="black"
-                size={20}
-                
+                size={18}
               />
             </Text>
             <Text style={styles.descricaoBase}>{this.props.base}</Text>
+          </View>
+        </View>
+        <View style={styles.viewColorida}>
+          <View style={{backgroundColor:"#52FFBA",height:"100%",width:"100%",alignItems: "center",padding:10,paddingLeft:18,flexDirection: 'column',flexWrap: 'wrap',borderRadius: 7,}}>
+            <Text style={styles.descricaoQuantidadeKcal}>{this.props.caloriasTotais}</Text>
+            <Text style={styles.descricaoKcal}>kcal</Text>
           </View>
         </View>
       </View>
@@ -51,36 +47,33 @@ export default class DetalhesCelula extends Component {
   }
 }
 const styles = StyleSheet.create({
-  imagem: {
-    height: '100%',
-    width: '100%',
-    borderRadius: 6,
-    flex: 1,
-  },
-  descricao: {
-    fontSize: 14,
-    color: "black",
-    left: 5
-  },
-  descricaoCaloria: {
-    fontSize: 14,
-    color: "#52FFBA",
-  },
   descricaoBase: {
+    fontSize: 12,
+    color: "black",
+    left:10
+  },
+  descricaoQuantidadeKcal: {
     fontSize: 14,
     color: "black",
-    left:5
+    top:5
+  },
+  descricaoKcal: {
+    fontSize: 14,
+    color: "black",
+    top:7
   },
   titulo: {
     fontSize: 14,
     color: "black",
-    left: 5,
+    left: 10,
   },
   viewCelula: {
     alignItems: "center",
     flexGrow: 1,
-    width: '95%',
-    height: 90,
+    width: '75%',
+    height: "20%",
+    top:"70%",
+    left:45,
     backgroundColor: 'white',
     borderRadius: 7,
     flexDirection: 'column',
@@ -93,12 +86,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.20,
     shadowRadius: 1.5,
     elevation: 2,
-    padding: 5,
+    padding: 0,
+    position:"absolute"
   },
-  viewImagemCelula: {
-    padding: 3,
+  viewColorida: {
+    padding: 0,
     backgroundColor: 'white',
-    width: '25%',
+    width: '30%',
     height: '100%',
     borderRadius: 7,
   }
