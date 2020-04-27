@@ -12,6 +12,7 @@ export default class SearchFood extends Component{
       itensAdd:["sss"],
       food:'',
       loading: false,
+      
     }
     this.onClickAddItem = this.onClickAddItem.bind(this);
     
