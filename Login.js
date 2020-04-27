@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Image,FlatList,TextInput, Button, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View,TextInput, TouchableOpacity, Alert} from 'react-native';
 
 export default class Login extends Component{
 
@@ -14,12 +14,25 @@ export default class Login extends Component{
       senha:''
     }
   }
-  
-  onFocus() {
-    this.setState({
-        borderColor: '#FFF'
-    })
-  } 
+
+  _onClickLogin = () => {
+    if(this.state.email == "" || this.state.senha == ""){
+      Alert.alert("Atenção", "Preencha todos os campos para continuar");
+      return false;
+    } else {
+      fetch('http://192.168.15.4:4548/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.state.email,
+          senha: this.state.senha
+        }),
+      }).then((response) => alert(response.sucess)).catch((error) => alert(error.error));
+    }
+  }
 
   render() {
     return (
@@ -38,7 +51,7 @@ export default class Login extends Component{
                   style={styles.input}
                   placeholder="Digite seu e-mail..."
                   placeholderTextColor="#ccc"
-                  onChangeText={(nome) => this.setState({nome}) }
+                  onChangeText={(email) => this.setState({email}) }
                   value={this.state.nome}
               />
           </View>
@@ -49,12 +62,12 @@ export default class Login extends Component{
                   style={styles.input}
                   placeholder="Digite sua senha..."
                   placeholderTextColor="#ccc"
-                  onChangeText={(idade) => this.setState({idade}) }
-                  value={this.state.idade}
+                  onChangeText={(senha) => this.setState({senha}) }
+                  value={this.state.senha}
               />
           </View>
           <View style={styles.viewButtons}>
-            <TouchableOpacity onPress = {() => {/* do this */}}>
+            <TouchableOpacity onPress = {() => {this._onClickLogin()}}>
               <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
                             justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2}}
               >

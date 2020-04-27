@@ -23,13 +23,18 @@ export default class App extends Component{
     }
   }
 
-  loadFoods = (params) => {
-    fetch('http://127.0.0.1:1337/foods/search/'+params+'/1/25').then(res => res.json() )
+  loadFoods = () => {
+    fetch('http://192.168.100.4:1337/foods/search/apple/1/50')
+    .then(res => res.json() )
     .then(res => {
       this.setState({
         data:res.foods.food || []
       })
     })
+  }
+
+  componentDidMount(){
+    this.loadFoods();
   }
 
   render() {
@@ -41,3 +46,12 @@ export default class App extends Component{
     );
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+   
+});

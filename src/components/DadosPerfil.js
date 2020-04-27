@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, ScrollView, Alert} from 'react-native';
 import DatePicker from 'react-native-datepicker'
 
 export default class DadosPerfil extends Component{
@@ -31,7 +31,9 @@ export default class DadosPerfil extends Component{
 
   validarCamposPerfil(){
     let estado = this.state;
-    if(estado.nome == "" || estado.nascimento == "" || estado.altura == "" || estado.peso == "" || estado.pesoMeta == ""){
+    if(estado.nome == "" || 
+    //estado.nascimento == "" || 
+    estado.altura == "" || estado.peso == "" || estado.pesoMeta == ""){
       Alert.alert("Atenção", "Preencha todos os campos para continuar");
       return false;
     }

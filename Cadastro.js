@@ -21,6 +21,8 @@ export default class Cadastro extends Component{
       altura:'',
       peso:'',
       pesoMeta:'',
+
+      status: 0
     }
 
     this.cadastrarUsuario = this.cadastrarUsuario.bind(this);
@@ -31,28 +33,43 @@ export default class Cadastro extends Component{
     this.props.navigation.navigate('Login')
   }
 
-  cadastrarUsuario(){
-    fetch('10.0.2.2:4548/registerPOST', {
+  async cadastrarUsuario(){
+    var result = await fetch('http://192.168.15.4:4548/register', {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.senha,
-        name: this.state.nome,
-        idade: this.state.idade,
-        peso:this.state.peso,
-        objetivo: this.state.pesoMeta
-      }),
-    }).then((response) => alert(response)).catch((error) => alert(error));
+            name:  this.state.nome,
+            email: this.state.email,
+            idade:  20,
+            senha: this.state.senha,
+            peso: this.state.peso,
+            objetivo: this.state.pesoMeta
+      })
+    })
+    .then(response => {
+      //this.setState({status: response.status});
+      response.json();
+    })
+    .then(response => {
+      if(status == 201){
+        Alert.alert(
+          "Sucesso", 
+          response.success,
+          { text: "OK", onPress: () => {this.redirectLogin(); this.setState({showDadosLogin: true})}});
+      }else if(status == 203){
+        Alert.alert(response.error, "teste");
+      } else if (status == 500){
+        Alert.alert("Erro do sistema", "Aguarde um pouco e tente novamente");
+      }
+    })
+    .catch(e => { console.log(e);Alert.alert("Erro do sistema", JSON.stringify(e)) });
   }
 
   _onClickAvancar(email, senha, confirmSenha){
-    
     this.setState({showDadosLogin: false, email: email, senha: senha, confirmSenha: confirmSenha});
-    
   }
 
   _onClickCancelar(){
@@ -61,11 +78,8 @@ export default class Cadastro extends Component{
   }
 
   _onClickCriarConta(nome, idade, altura, peso, pesoMeta){
-    
-    this.setState({showDadosLogin: true, nome: nome, idade: idade, altura: altura, peso: peso, pesoMeta: pesoMeta});
-    this.cadastrarUsuario();
-    this.redirectLogin();
-    
+    console.log(nome+" "+altura+" "+peso+" "+pesoMeta);
+    this.setState({nome: nome, idade: idade, altura: altura, peso: peso, pesoMeta: pesoMeta}, () => this.cadastrarUsuario());
   }
 
   _onClickVoltar(){
