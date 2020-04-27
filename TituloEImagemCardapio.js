@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, SafeAreaView,View,Image,FlatList,TextInput, TouchableWithoutFeedback, ViewBase} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, SafeAreaView, View, Image, FlatList, TextInput, TouchableWithoutFeedback, ViewBase } from 'react-native';
 
-export default class DetalhesCardapio extends Component{
+export default class DetalhesCardapio extends Component {
 
-  constructor(){
+  constructor() {
     super();
     this.state = {
       data: [],
@@ -15,49 +15,45 @@ export default class DetalhesCardapio extends Component{
 
   render() {
     return (
-        <View style={styles.viewInicial}>
-          <Text style={styles.tituloDoCardapio}>{this.props.titulo}</Text>
-          <View style={styles.viewImagemDoCardapio}>
-            <Image style={styles.imagemDoCardapio} source={this.props.imagemDoCardapio}></Image>
-          </View>
+      <View style={styles.viewInicial}>
+        <View style={styles.viewImagemDoCardapio}>
+          <Image style={styles.imagemDoCardapio} source={this.props.imagemDoCardapio}></Image>
         </View>
-      );
+        <Text style={styles.tituloDoCardapio}>{this.props.titulo}</Text>
+        <Text style={styles.quantidadeCaloria}>{this.props.quantidadeCaloria + "Kcal"}</Text>
+      </View>
+    );
   }
 }
 const styles = StyleSheet.create({
-  viewInicial:{
+  viewInicial: {
     position: "absolute",
-    backgroundColor: 'white', 
-    top: 28, 
-    left:1, 
-    height:"76%",
-    right: 0, 
-    bottom: 40, 
-    justifyContent: 'center', 
+    backgroundColor: 'white',
+    top: 0,
+    left: 0,
+    height: "65%",
+    width: "100%",
+    right: 0,
+    bottom: 40,
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  viewImagemDoCardapio:{
-    height: '90%', 
-    width:'93%',
-    borderRadius:7,
-    backgroundColor: 'black',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+  viewImagemDoCardapio: {
+    height: '90%',
+    width: '100%',
+    borderRadius: 7,
+    backgroundColor: 'white',
+    
   },
-  imagemDoCardapio:{
-    height: '100%', 
-    width:'100%',
-    borderRadius:7,
+  imagemDoCardapio: {
+    height: '100%',
+    width: '100%',
   },
-  tituloDoCardapio:{
-    fontWeight: 'bold',
-    fontSize: 24,
+  tituloDoCardapio: {
+    fontSize: 19,
   },
-  
+  quantidadeCaloria: {
+    color: '#52FFBA',
+    fontSize: 17,
+  },
 });

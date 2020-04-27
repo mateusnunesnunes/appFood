@@ -15,7 +15,7 @@ export default class ImagemENomeUsuario extends Component{
 
   render() {
     return (
-        <View style={this.viewInicial}>
+        <View style={{justifyContent: 'center',alignItems: 'center',height:"45%",backgroundColor:'#52FFBA'}}>
           <Image 
               source={require('./Imagens/comida.jpg')}  
               style={{width:180,height:180,borderRadius: 180/ 2}} 
@@ -30,12 +30,6 @@ export default class ImagemENomeUsuario extends Component{
   }
 }
 const styles = StyleSheet.create({
-  viewInicial:{
-    height:"50%",
-    backgroundColor:'#52FFBA',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   imagem:{
     width:180,height:180,borderRadius: 180/ 2
   },
