@@ -17,6 +17,7 @@ export default class DetalhesCardapio extends Component {
 
   pesquisar() {
     alert("Clicado pesquisar");
+    
   }
 
   //"#52FFBA"
