@@ -81,6 +81,7 @@ export default class SearchFood extends Component{
             <TextInput
                 style={styles.input}
                 placeholder="Digite o alimento que você procura"
+                
                 placeholderTextColor="#ccc"
                 onChangeText={(food) => this.setState({food: food, loading: true}, () => {this.setState({loading: false}, this.loadFoods())}) }
                 value={this.state.food}
