@@ -1,38 +1,43 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, ScrollView, Alert} from 'react-native';
-import DatePicker from 'react-native-datepicker'
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert} from 'react-native';
 
 export default class DadosPerfil extends Component{
 
   constructor(props){
     super(props);
     this.state = {
-        nome:'',
-        nascimento:'',
-        altura:'',
-        peso:'',
-        pesoMeta:'',
+      nome:'',
+      dataNascimento:'',
+      altura:'',
+      peso:'',
+      pesoMeta:'',
+        show:false
     }
     this.clickVoltar = this.clickVoltar.bind(this);
     this.clickCriarConta = this.clickCriarConta.bind(this);
     this.validarCamposPerfil = this.validarCamposPerfil.bind(this);
+    this.onChangeData = this.onChangeData(this);
   }
 
   clickCriarConta(){
     if(this.validarCamposPerfil()){
-      this.props._onClickCriarConta(this.state.nome, this.state.nascimento, this.state.altura, this.state.peso, this.state.pesoMeta);
-    }
-    
+      this.props._onClickCriarConta(this.state.nome, this.state.dataNascimento, this.state.altura, this.state.peso, this.state.pesoMeta);
+    } 
   }
 
   clickVoltar(){
     this.props._onClickVoltar();
   }
 
+  onChangeData(dataNascimento){
+    //this.setState({dataNascimento: dataNascimento});
+
+  }
+
   validarCamposPerfil(){
     let estado = this.state;
     if(estado.nome == "" || 
-    //estado.nascimento == "" || 
+    estado.dataNascimento == "" || 
     estado.altura == "" || estado.peso == "" || estado.pesoMeta == ""){
       Alert.alert("Atenção", "Preencha todos os campos para continuar");
       return false;
@@ -61,38 +66,15 @@ export default class DadosPerfil extends Component{
                 
                     <View style={styles.viewText}>
                         <Text style={styles.texto}>Data de nascimento</Text>
-                        <DatePicker 
-                          style={{width: "100%"}}
-                          date={this.state.nascimento}
-                          mode="date"
-                          placeholder="Selecione uma data"
-                          format="DD/MM/YYYY"
-                          confirmBtnText="Confirmar"
-                          cancelBtnText="Cancelar"
-                          customStyles={{
-                            dateIcon: {
-                              position: 'absolute',
-                              left: 0,
-                              top: 4,
-                              marginLeft: 0,
-                              opacity:0
-                            },
-                            dateInput: {
-                              marginTop:20,
-                              height: 40, 
-                              borderTopWidth: 2,
-                              borderLeftWidth: 2,
-                              borderRightWidth: 2,
-                              borderColor:'#37db9a',
-                              borderBottomWidth: 2,
-                              borderRadius:30,
-                              paddingLeft:5,
-                              color:'black',
-                            }
-                            // ... You can check the source to find the other keys.
-                          }}
-                          onDateChange={(nascimento) => {this.setState({nascimento: nascimento})}}
+                        <TextInput
+                            
+                            style={styles.input}
+                            placeholder="Digite sua data de nascimento..."
+                            placeholderTextColor="#ccc"
+                            onChangeText={(dataNascimento) => this.setState({dataNascimento: dataNascimento}) }
+                            value={this.state.dataNascimento}
                         />
+                        
                     </View>
 
                     <View style={styles.viewText}>

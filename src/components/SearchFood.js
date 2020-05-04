@@ -12,7 +12,6 @@ export default class SearchFood extends Component{
       itensAdd:["sss"],
       food:'',
       loading: false,
-      
     }
     this.onClickAddItem = this.onClickAddItem.bind(this);
     
@@ -43,7 +42,7 @@ export default class SearchFood extends Component{
       return(<View style={styles.load}><IconFeather style={styles.loadIcon} name="loader" size={20} color="#000"/></View>)
     }else{
       return(
-<FlatList
+        <FlatList
             data={this.state.data}
             renderItem={({item}) => (
             <View style={styles.viewItem}>

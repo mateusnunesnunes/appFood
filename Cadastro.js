@@ -17,7 +17,7 @@ export default class Cadastro extends Component{
       confirmSenha:'',
 
       nome:'',
-      idade:'',
+      dataNascimento:'',
       altura:'',
       peso:'',
       pesoMeta:'',
@@ -34,7 +34,7 @@ export default class Cadastro extends Component{
   }
 
   async cadastrarUsuario(){
-    var result = await fetch('http://192.168.15.4:4548/register', {
+    var result = await fetch('http://192.168.15.10:4548/register', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -43,26 +43,33 @@ export default class Cadastro extends Component{
       body: JSON.stringify({
             name:  this.state.nome,
             email: this.state.email,
-            idade:  20,
+            dataNascimento:  this.state.dataNascimento,
             senha: this.state.senha,
             peso: this.state.peso,
-            objetivo: this.state.pesoMeta
+            objetivo: this.state.pesoMeta,
+            altura: this.state.altura
       })
     })
     .then(response => {
-      //this.setState({status: response.status});
+      console.log("Status" + response.status);
+      this.setState({status: response.status});
       response.json();
     })
     .then(response => {
-      if(status == 201){
+      if(this.state.status == 201){
         Alert.alert(
           "Sucesso", 
-          response.success,
-          { text: "OK", onPress: () => {this.redirectLogin(); this.setState({showDadosLogin: true})}});
-      }else if(status == 203){
-        Alert.alert(response.error, "teste");
-      } else if (status == 500){
+          "Usuário cadastrado!",
+          [
+          { text: "OK", onPress: () => {this.redirectLogin(); this.setState({showDadosLogin: true})}}
+          ]
+        );
+      }else if(this.state.status == 203){
+        Alert.alert("Atenção", "Já existe um usuário com o e-mail informado. Verifique seu e-mail e tente novamente");
+      } else if (this.state.status == 500){
         Alert.alert("Erro do sistema", "Aguarde um pouco e tente novamente");
+      }else{
+        Alert.alert("Erro", "Exceção não tratada, entre em contato com os desenvolvedores ou tente novamente mais tarde");
       }
     })
     .catch(e => { console.log(e);Alert.alert("Erro do sistema", JSON.stringify(e)) });
@@ -73,13 +80,13 @@ export default class Cadastro extends Component{
   }
 
   _onClickCancelar(){
-    this.setState({showDadosLogin: true, email: "", senha: "", confirmSenha: "", nome: "", idade: "", altura: "", peso: "", pesoMeta: ""});
+    this.setState({showDadosLogin: true, email: "", senha: "", confirmSenha: "", nome: "", dataNascimento: "", altura: "", peso: "", pesoMeta: ""});
     this.redirectLogin();
   }
 
-  _onClickCriarConta(nome, idade, altura, peso, pesoMeta){
+  _onClickCriarConta(nome, dataNascimento, altura, peso, pesoMeta){
     console.log(nome+" "+altura+" "+peso+" "+pesoMeta);
-    this.setState({nome: nome, idade: idade, altura: altura, peso: peso, pesoMeta: pesoMeta}, () => this.cadastrarUsuario());
+    this.setState({nome: nome, dataNascimento: dataNascimento, altura: altura, peso: peso, pesoMeta: pesoMeta}, () => this.cadastrarUsuario());
   }
 
   _onClickVoltar(){
