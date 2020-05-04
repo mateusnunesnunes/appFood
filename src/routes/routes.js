@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 
 export default function Routes() {
     return (
-      <Stack.Navigator initialRouteName="SearchFood" screenOptions={{ headerStyle: {backgroundColor:'#ccc'}, headerTintColor:'#FFF' } }>
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerStyle: {backgroundColor:'#ccc'}, headerTintColor:'#FFF' } }>
         <Stack.Screen
         options={{headerLeft: null}}
           name="Login"
