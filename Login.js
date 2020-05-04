@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View,TextInput, TouchableOpacity, Alert} from 'react-native';
+import SessaoSingleton from './SessaoSingleton';
 
 export default class Login extends Component{
 
@@ -15,22 +16,47 @@ export default class Login extends Component{
     }
   }
 
-  _onClickLogin = () => {
+   _onClickLogin = async() => {
     if(this.state.email == "" || this.state.senha == ""){
       Alert.alert("Atenção", "Preencha todos os campos para continuar");
       return false;
     } else {
-      fetch('http://192.168.15.4:4548/login', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: this.state.email,
-          senha: this.state.senha
-        }),
-      }).then((response) => alert(response.sucess)).catch((error) => alert(error.error));
+      var result = await fetch('http://192.168.15.10:4548/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+            email: this.state.email,
+            senha: this.state.senha,
+      })
+    })
+    .then(response => {
+      this.setState({status: response.status});
+      response.json();
+    })
+    .then(response => {
+      if(this.state.status == 201){
+        SessaoSingleton.getInstance().setIsLogado(false);
+        if(SessaoSingleton.getInstance().getIsLogado()){
+          // redirecionar para mainPage
+        }
+        
+      }else if(this.state.status == 203){
+        Alert.alert("Atenção", "O usuário informado não existe", [
+          { text: "Cadastrar", onPress: () => {this.props.navigation.navigate('Cadastro')}},
+          {text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"}
+          ]);
+      } else if (this.state.status == 500){
+        Alert.alert("Erro do sistema", "Aguarde um pouco e tente novamente");
+      }else{
+        Alert.alert("Erro", "Exceção não tratada, entre em contato com os desenvolvedores ou tente novamente mais tarde");
+      }
+    })
+    .catch(e => { console.log(e);Alert.alert("Erro do sistema", JSON.stringify(e)) });
     }
   }
 

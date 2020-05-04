@@ -11,7 +11,7 @@ var md5 = require('md5');
 //Conexao
 var con = mysql.createConnection({
     host :'localhost',
-    port:'8889',
+    port:'3307',
     user:'root',
     password:'root',
     database:'appFoods',
@@ -62,16 +62,16 @@ app.post('/login',function(req,res){
   try {
     con.query("SELECT * FROM Users WHERE email = '"+req.body.email+"' AND senha = '"+passwordHashed+"'",function (error,rows,fields) {
         if (rows.length == 0){
-            res.send('Login falho');
+            res.status(203).send('Login falho');
         }
         else{
             if(error){
                 console.log(error);
-                res.send('error');
+                res.status(500).send('error');
             } 
             else{
                 console.log(rows);
-                res.send('sucess');
+                res.status(201).send('sucess');
             }
         }
     });
@@ -83,41 +83,41 @@ app.post('/login',function(req,res){
 app.post('/register',function(req,res){
     let resultado = req.body.senha + req.body.name
     let senhaHashed = md5(resultado);
-    let idade = 2020 - parseInt(req.body.anoNascimento);
+    let data = req.body.dataNascimento;
 
     try {
-        con.query("select * from Users where email = '"+[req.body.email]+"'",function (error,rows,fields) {
+        con.query("select * from `Users` where email = '"+[req.body.email]+"'",function (error,rows,fields) {
             if (rows.length == 0){
                 try {
-                    con.query("INSERT INTO `Users` (`nome`,`email`,`idade`,`senha`,`peso`,`objetivo`, `altura`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+idade+"','"+senhaHashed+"','"+req.body.peso+"','"+req.body.objetivo+"','"+req.body.altura+"')",function (error,rows,fields) {
+                    con.query("INSERT INTO `Users` (`nome`,`email`,`senha`,`peso`,`objetivo`, `altura`,`dataNascimento`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+senhaHashed+"','"+req.body.peso+"','"+req.body.objetivo+"','"+req.body.altura+"','"+data+"')",function (error,rows,fields) {
                         if(error){
                             console.log(error);
-                            res.json({'error':error});
+                            res.status(500).json({'error':error});
                         }
                         else{
                             console.log(rows);
-                            res.json({'sucess':'usuario registrado'});
+                            res.status(201).json({'success':'usuario registrado'});
                         }
                     });
                 } catch (error) {
-                    res.json({'error':error});
+                    res.status(500).json({'error':error});
                 } 
             }
             else{
                 if(error){
                     
-                    res.json({'error':error});
+                    res.status(500).json({'error':error});
                 } 
                 else{
                     console.log(rows);
-                    res.json({'erro':'Usuario já existe'});
+                    res.status(203).json({'erro':'Usuario já existe'});
                 }
             }
             
             
         });
     } catch (error) {
-        res.json({'error':error});
+        res.status(500).json({'error':error});
     } 
 })
 app.post('/insertFood',function(req,res){
@@ -154,6 +154,7 @@ app.post('/insertFood',function(req,res){
         res.json({'error':error});
     } 
 })
+
 app.get('/listaComidas',function(req,res){
     let idsComidas = []
     try {
