@@ -154,6 +154,7 @@ app.post('/insertFood',function(req,res){
         res.json({'error':error});
     } 
 })
+
 app.get('/listaComidas',function(req,res){
     let idsComidas = []
     try {
