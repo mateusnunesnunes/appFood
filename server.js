@@ -11,7 +11,7 @@ var md5 = require('md5');
 //Conexao
 var con = mysql.createConnection({
     host :'localhost',
-    port:'3307',
+    port:'8889',
     user:'root',
     password:'root',
     database:'appFoods',
@@ -21,17 +21,24 @@ var con = mysql.createConnection({
 var server = app.listen(4548,function(){
     var host = server.address().address
     var port = server.address().port
-    console.log("start");
+    console.log("start "+port);
 });
 //Conexão
 con.connect(function(error){
     if(error) console.log(error);
     else console.log("connected");
 });
-//Seleciona usuarios pelo nome
+
+//sql querys
+const selectAllFromUsers = "SELECT * FROM Users WHERE email = ? AND senha = ?";
+const selectAllFromUsersWhereNome = "select * from Users where nome = ?";
+const selectAllFromUsersWhereEmail = "select * from `Users` where email = ?";
+const selectSemanaUm = "SELECT `idComida` FROM `relacaoComidasSemana` WHERE `idSemana`='1'";
+
+
 app.get('/users/:nome?',function(req,res){
     try {
-        con.query("select * from Users where nome = '"+[req.params.nome]+"'",function (error,rows,fields) {
+        con.query(selectAllFromUsersWhereNome,[req.params.nome],function (error,rows,fields) {
             if (!req.params.nome) {
                 res.send('Parametro errado => /users/nome');
                 return;
@@ -54,39 +61,37 @@ app.get('/users/:nome?',function(req,res){
         console.log('There has been a problem with your fetch operation: ' + error.message);
     } 
 });
-//Login SELECT * FROM Users WHERE nome = 'name' AND senha = 'password'
+//no lugar das var colocar ? e no fim da query passar array de valores con.query("SELECT * FROM Users WHERE e-mail=? AND senha=?", [req.body.name, req.body.password]);
 app.post('/login',function(req,res){
-  var user_name=req.body.user;
-  let resultado = req.body.senha + req.body.name
-  var passwordHashed = md5(resultado);
-  try {
-    con.query("SELECT * FROM Users WHERE email = '"+req.body.email+"' AND senha = '"+passwordHashed+"'",function (error,rows,fields) {
-        if (rows.length == 0){
-            res.status(203).send('Login falho');
-        }
-        else{
-            if(error){
-                console.log(error);
-                res.status(500).send('error');
-            } 
-            else{
-                console.log(rows);
-                res.status(201).send('sucess');
-            }
-        }
-    });
-    } catch (error) {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
-    } 
+    let resultado = req.body.senha + req.body.email
+    var passwordHashed = md5(resultado);
+    try {
+      con.query(selectAllFromUsers,[req.body.email,passwordHashed],function (error,rows,fields) {
+          if (rows.length == 0){
+              res.status(203).send('Login falho');
+          }
+          else{
+              if(error){
+                  console.log(error);
+                  res.status(500).send('error');
+              } 
+              else{
+                  console.log(rows);
+                  res.status(201).json({'success':rows});
+              }
+          }
+      });
+      } catch (error) {
+          console.log('There has been a problem with your fetch operation: ' + error.message);
+      } 
 });
 //register POST function, mandar $name $email $idade $senha $peso $objetivo frontend
 app.post('/register',function(req,res){
-    let resultado = req.body.senha + req.body.name
+    let resultado = req.body.senha + req.body.email
     let senhaHashed = md5(resultado);
     let data = req.body.dataNascimento;
-
     try {
-        con.query("select * from `Users` where email = '"+[req.body.email]+"'",function (error,rows,fields) {
+        con.query(selectAllFromUsersWhereEmail,[req.body.email],function (error,rows,fields) {
             if (rows.length == 0){
                 try {
                     con.query("INSERT INTO `Users` (`nome`,`email`,`senha`,`peso`,`objetivo`, `altura`,`dataNascimento`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+senhaHashed+"','"+req.body.peso+"','"+req.body.objetivo+"','"+req.body.altura+"','"+data+"')",function (error,rows,fields) {
@@ -154,11 +159,10 @@ app.post('/insertFood',function(req,res){
         res.json({'error':error});
     } 
 })
-
 app.get('/listaComidas',function(req,res){
     let idsComidas = []
     try {
-        con.query("SELECT `idComida` FROM `relacaoComidasSemana` WHERE `idSemana`='1'",function (error,rows,fields) {
+        con.query(selectSemanaUm,function (error,rows,fields) {
             if(error){
                 res.json({'error':error});
             } 
