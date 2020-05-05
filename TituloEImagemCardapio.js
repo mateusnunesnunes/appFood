@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, SafeAreaView, View, Image, FlatList, TextInput, TouchableWithoutFeedback, ViewBase } from 'react-native';
 
-export default class DetalhesCardapio extends Component {
+
+export default class TituloEImagemCardapio extends Component {
 
   constructor() {
     super();
@@ -20,37 +21,35 @@ export default class DetalhesCardapio extends Component {
           <Image style={styles.imagemDoCardapio} source={this.props.imagemDoCardapio}></Image>
         </View>
         <Text style={styles.tituloDoCardapio}>{this.props.titulo}</Text>
-        <Text style={styles.quantidadeCaloria}>{this.props.quantidadeCaloria + "Kcal"}</Text>
+        <Text style={styles.quantidadeCaloria}>{this.props.quantidadeCaloria + " Kcal"}</Text>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   viewInicial: {
-    position: "absolute",
     backgroundColor: 'white',
-    top: 0,
+    top: "5%",
     left: 0,
-    height: "65%",
+    height: "40%",
     width: "100%",
     right: 0,
     bottom: 40,
+    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   viewImagemDoCardapio: {
     height: '90%',
-    width: '100%',
-    borderRadius: 7,
-    backgroundColor: 'white',
-    
+    width: '100%'
   },
   imagemDoCardapio: {
     height: '100%',
     width: '100%',
+    borderRadius: 8,
   },
   tituloDoCardapio: {
-    fontSize: 19,
+    fontSize: 17,
   },
   quantidadeCaloria: {
     color: '#52FFBA',

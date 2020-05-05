@@ -45,7 +45,7 @@ export default class DetalhesCardapio extends Component {
             <Text style={{ fontSize: 16 }}>Total de </Text>
             <Text style={{ fontSize: 16 }}>{this.state.totalCalorias}</Text>
             <Text style={{ fontSize: 16 }}> kcal</Text>
-            <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap'}} onPress={() => navigation.navigate("DetalhesDiaDoCardapio")} >
+            <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap'}} onPress={() => navigation.navigate("SearchFood")} >
               <Text style={{ fontSize: 16, color: '#52FFBA', left: 80 }}>adicionar mais</Text>
               <Icon
                   name='add-circle'

@@ -19,11 +19,10 @@ export default class DetalhesDiaDoCardapio extends Component {
       text: ''
     }
   }
-  function() {
-    alert("Clicado");
-  }
+
 
   render() {
+    const { navigation } = this.props;
     return (
       <SafeAreaView style={{backgroundColor:"white"}}>
         <TituloEImagemCardapio
@@ -37,7 +36,7 @@ export default class DetalhesDiaDoCardapio extends Component {
           style={{ top: "70%", paddingBottom: 5,backgroundColor:"white",height:"60%" }}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity style={{ flex: 1,backgroundColor:"white" }} onPress={this.function} >
+              <TouchableOpacity style={{ flex: 1,backgroundColor:"white" }} onPress={() => navigation.navigate("DetalhesRefeicao")} >
                 <View style={{ flex: 1, justifyContent: 'center',alignItems: 'center',paddingBottom: 5,backgroundColor:"white",paddingTop:5  }}>
                   <DetalhesCelula
                     diaDaSemana={item.diaDaSemana}
