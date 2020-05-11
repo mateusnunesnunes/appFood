@@ -56,32 +56,32 @@ app.get('/users/:nome?',function(req,res){
 });
 //Login SELECT * FROM Users WHERE nome = 'name' AND senha = 'password'
 app.post('/login',function(req,res){
-  var user_name=req.body.user;
-  let resultado = req.body.senha + req.body.name
-  var passwordHashed = md5(resultado);
-  try {
-    con.query("SELECT * FROM Users WHERE email = '"+req.body.email+"' AND senha = '"+passwordHashed+"'",function (error,rows,fields) {
-        if (rows.length == 0){
-            res.status(203).send('Login falho');
-        }
-        else{
-            if(error){
-                console.log(error);
-                res.status(500).send('error');
-            } 
-            else{
-                console.log(rows);
-                res.status(201).send('sucess');
-            }
-        }
-    });
-    } catch (error) {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
-    } 
+    let resultado = req.body.senha + req.body.email
+    var passwordHashed = md5(resultado);
+    try {
+      con.query("SELECT * FROM Users WHERE email = '"+req.body.email+"' AND senha = '"+passwordHashed+"'",function (error,rows,fields) {
+          if (rows.length == 0){
+              res.status(203).send('Login falho');
+          }
+          else{
+              if(error){
+                  console.log(error);
+                  res.status(500).send('error');
+              } 
+              else{
+                  console.log(JSON.stringify(rows));
+                  res.status(201).json({'success':rows});
+
+              }
+          }
+      });
+      } catch (error) {
+          console.log('There has been a problem with your fetch operation: ' + error.message);
+      } 
 });
 //register POST function, mandar $name $email $idade $senha $peso $objetivo frontend
 app.post('/register',function(req,res){
-    let resultado = req.body.senha + req.body.name
+    let resultado = req.body.senha + req.body.email
     let senhaHashed = md5(resultado);
     let data = req.body.dataNascimento;
 
@@ -120,6 +120,7 @@ app.post('/register',function(req,res){
         res.status(500).json({'error':error});
     } 
 })
+//insertFood ->   nome, carboidrato, gordura, gordura, proteina, descricao
 app.post('/insertFood',function(req,res){
     let nome = req.body.nome
     let carboidratos = req.body.carboidratos
@@ -142,18 +143,17 @@ app.post('/insertFood',function(req,res){
                         res.json({'error':error});
                     } 
                     else{
-    
                         res.json({"success":rows});
                     } 
                 })
             }
-            
-            
         });
     } catch (error) {
         res.json({'error':error});
     } 
 })
+
+
 app.get('/listaComidas',function(req,res){
     let idsComidas = []
     try {

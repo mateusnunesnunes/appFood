@@ -8,13 +8,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Login from '../../Login';
 import Cadastro from '../../Cadastro';
-import SearchFood from '../components/SearchFood';
+import SearchFood from '../../SearchFood';
 
 const Stack = createStackNavigator();
 
 export default function Routes() {
     return (
-      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerStyle: {backgroundColor:'#ccc'}, headerTintColor:'#FFF' } }>
+      <Stack.Navigator initialRouteName="SearchFood" screenOptions={{ headerStyle: {backgroundColor:'#ccc'}, headerTintColor:'#FFF' } }>
         <Stack.Screen
         options={{headerLeft: null}}
           name="Login"

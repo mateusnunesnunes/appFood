@@ -7,12 +7,8 @@ export default class Login extends Component{
   constructor(){
     super();
     this.state = {
-      logado: false,
-      inputEditing:{
-        borderColor: '#EEE',
-      },
-      email:'',
-      senha:''
+      email:'gfjgabriel@gmail.com',
+      senha:'gab'
     }
   }
 
@@ -28,29 +24,30 @@ export default class Login extends Component{
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-            email: this.state.email,
-            senha: this.state.senha,
+            email: this.state.email.trim(),
+            senha: this.state.senha.trim(),
       })
-    })
-    .then(response => {
-      this.setState({status: response.status});
-      response.json();
-    })
-    .then(response => {
-      if(this.state.status == 201){
-        SessaoSingleton.getInstance().setIsLogado(false);
+    }).then(response => 
+      response.json().then(data => ({
+          data: data,
+          status: response.status
+      })
+  )).then(response => {
+      if(response.status == 201){
+        SessaoSingleton.getInstance().setIsLogado(true);
         if(SessaoSingleton.getInstance().getIsLogado()){
-          // redirecionar para mainPage
+          SessaoSingleton.getInstance().setUserID(response.data.success[0]["id"]);
+          console.log(SessaoSingleton.getInstance().getUserID());
+          this.props.navigation.navigate('SearchFood');
         }
-        
-      }else if(this.state.status == 203){
+      }else if(response.status == 203){
         Alert.alert("Atenção", "O usuário informado não existe", [
           { text: "Cadastrar", onPress: () => {this.props.navigation.navigate('Cadastro')}},
           {text: "Cancelar",
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"}
           ]);
-      } else if (this.state.status == 500){
+      } else if (response.status == 500){
         Alert.alert("Erro do sistema", "Aguarde um pouco e tente novamente");
       }else{
         Alert.alert("Erro", "Exceção não tratada, entre em contato com os desenvolvedores ou tente novamente mais tarde");
@@ -77,8 +74,12 @@ export default class Login extends Component{
                   style={styles.input}
                   placeholder="Digite seu e-mail..."
                   placeholderTextColor="#ccc"
-                  onChangeText={(email) => this.setState({email}) }
-                  value={this.state.nome}
+                  autoCapitalize = 'none'
+                  onChangeText={(email) => {
+                    
+                    this.setState({email})
+                } }
+                  value={this.state.email}
               />
           </View>
       
@@ -88,6 +89,7 @@ export default class Login extends Component{
                   style={styles.input}
                   placeholder="Digite sua senha..."
                   placeholderTextColor="#ccc"
+                  autoCapitalize = 'none'
                   onChangeText={(senha) => this.setState({senha}) }
                   value={this.state.senha}
               />
@@ -130,7 +132,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAFDFF',
   },
   input:{
-    height: 40, 
+    height: 50, 
+    fontSize:16,
+    padding:5,
     borderBottomColor:'#37db9a',
     borderBottomWidth: 1,
     paddingLeft:5,
