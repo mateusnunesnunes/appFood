@@ -19,25 +19,27 @@ export default class DetalhesDiaDoCardapio extends Component {
       text: ''
     }
   }
-  function() {
-    alert("Clicado");
-  }
+/*.getParam("diaDaSemana")
+const titulo = navigation.getParam("diaDaSemana","AAAAAAAA");
+onPress={() => navigation.navigate("DetalhesRefeicao")}
+*/ 
 
   render() {
+    const { navigation } = this.props;
     return (
       <SafeAreaView style={{backgroundColor:"white"}}>
         <TituloEImagemCardapio
-          titulo={this.state.titulo}
+          titulo={"AAAAA"}
           imagemDoCardapio={this.state.imagemDoCardapio}
           quantidadeCaloria ={this.state.quantidadeCalorias}
         ></TituloEImagemCardapio>
         <FlatList
           data={this.state.data}
           keyExtractor={item => item.id}
-          style={{ top: "70%", paddingBottom: 5,backgroundColor:"white",height:"60%" }}
+          style={{ top: "5%", paddingBottom: 5,backgroundColor:"white",height:"60%" }}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity style={{ flex: 1,backgroundColor:"white" }} onPress={this.function} >
+              <TouchableOpacity style={{ flex: 1,backgroundColor:"white" }}  >
                 <View style={{ flex: 1, justifyContent: 'center',alignItems: 'center',paddingBottom: 5,backgroundColor:"white",paddingTop:5  }}>
                   <DetalhesCelula
                     diaDaSemana={item.diaDaSemana}
