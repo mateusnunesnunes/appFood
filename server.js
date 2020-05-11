@@ -175,6 +175,7 @@ app.post('/insertFood',function(req,res){
         res.json({'error':error});
     } 
 
+    
 
     // let nome = req.body.nome
     // let carboidratos = req.body.carboidratos
