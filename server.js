@@ -125,39 +125,87 @@ app.post('/register',function(req,res){
         res.status(500).json({'error':error});
     } 
 })
+//insertFood ->   nome, carboidrato, gordura, gordura, proteina, descricao
+const insertComidas = "INSERT INTO `comidas`(`nome`, `carboidratos`, `proteinas`, `gorduras`, `descricao`) VALUES ?;"
+const getlastIdComida = "SELECT `id` AS LastID FROM `comidas` WHERE `id` = @@Identity;"
+const insertIntoRelacaoComidas = "INSERT INTO `relacaoComidasSemana`(`idComida`, `idSemana`) VALUES ?;"
 app.post('/insertFood',function(req,res){
-    let nome = req.body.nome
-    let carboidratos = req.body.carboidratos
-    let gordura = req.body.gordura
-    let proteina = req.body.proteina
-    let descricao = req.body.descricao
-    let semana  = req.body.semana
-    let lastId = 0
+    let data = req.body;
+    let values = [];
+    let ids = []
+    data.forEach(val =>{
+        let localList = [];
+        localList.push(val.nome);
+        localList.push(val.carboidratos);
+        localList.push(val.proteina);
+        localList.push(val.gordura);
+        localList.push(val.descricao);
+        values.push(localList);
+    })
+    let tamanhoData = values.length;
+    let firstId = 0;
     try {
-        con.query("INSERT INTO `comidas`(`nome`, `carboidratos`, `proteinas`, `gorduras`, `descricao`) VALUES ('"+nome+"','"+carboidratos+"','"+proteina+"','"+gordura+"','"+descricao+"');SELECT `id` AS LastID FROM `comidas` WHERE `id` = @@Identity;",function (error,rows,fields) {
+        con.query(insertComidas+getlastIdComida,[values],function (error,rows,fields) {
             if(error){
                 res.json({'error':error});
             } 
             else{
                 rows[1].forEach(element => {
-                    lastId = element["LastID"]
+                    firstId = element["LastID"];   
                 });
-                con.query("INSERT INTO `relacaoComidasSemana`(`idComida`, `idSemana`) VALUES ('"+lastId+"','"+semana+"')",function (error,rows,fields) {
-                    if(error){
+                for (let i = firstId; i < firstId+tamanhoData; i++) {
+                    let localArray = [];
+                    localArray.push(i);
+                    localArray.push(1);
+                    ids.push(localArray);
+                }
+                console.log("ids dps for = "+ids)
+                con.query(insertIntoRelacaoComidas,[ids],function (error,rows,fields) {
+                    if(error){ 
                         res.json({'error':error});
                     } 
                     else{
-    
                         res.json({"success":rows});
                     } 
                 })
-            }
-            
-            
+            }  
         });
     } catch (error) {
         res.json({'error':error});
     } 
+
+
+    // let nome = req.body.nome
+    // let carboidratos = req.body.carboidratos
+    // let gordura = req.body.gordura
+    // let proteina = req.body.proteina
+    // let descricao = req.body.descricao
+    // let lastId = 0
+    // try {
+    //     con.query("INSERT INTO `comidas`(`nome`, `carboidratos`, `proteinas`, `gorduras`, `descricao`) VALUES ('"+nome+"','"+carboidratos+"','"+proteina+"','"+gordura+"','"+descricao+"');SELECT `id` AS LastID FROM `comidas` WHERE `id` = @@Identity;",function (error,rows,fields) {
+    //         if(error){
+    //             res.json({'error':error});
+    //         } 
+    //         else{
+    //             rows[1].forEach(element => {
+    //                 lastId = element["LastID"]
+    //             });
+    //             console.log("ULTIMO ID = "+lastId);
+    //             con.query("INSERT INTO `relacaoComidasSemana`(`idComida`, `idSemana`) VALUES ('"+lastId+"',1)",function (error,rows,fields) {
+    //                 if(error){
+    //                     res.json({'error':error});
+    //                 } 
+    //                 else{
+    //                     res.json({"success":rows});
+    //                 } 
+    //             })
+    //         }
+            
+            
+    //     });
+    // } catch (error) {
+    //     res.json({'error':error});
+    // } 
 })
 app.get('/listaComidas',function(req,res){
     let idsComidas = []
