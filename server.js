@@ -11,7 +11,7 @@ var md5 = require('md5');
 //Conexao
 var con = mysql.createConnection({
     host :'localhost',
-    port:'3307',
+    port:'8889',
     user:'root',
     password:'root',
     database:'appFoods',
@@ -21,17 +21,24 @@ var con = mysql.createConnection({
 var server = app.listen(4548,function(){
     var host = server.address().address
     var port = server.address().port
-    console.log("start");
+    console.log("start "+port);
 });
 //Conexão
 con.connect(function(error){
     if(error) console.log(error);
     else console.log("connected");
 });
-//Seleciona usuarios pelo nome
+
+//sql querys
+const selectAllFromUsers = "SELECT * FROM Users WHERE email = ? AND senha = ?";
+const selectAllFromUsersWhereNome = "select * from Users where nome = ?";
+const selectAllFromUsersWhereEmail = "select * from `Users` where email = ?";
+const selectSemanaUm = "SELECT `idComida` FROM `relacaoComidasSemana` WHERE `idSemana`='1'";
+
+
 app.get('/users/:nome?',function(req,res){
     try {
-        con.query("select * from Users where nome = '"+[req.params.nome]+"'",function (error,rows,fields) {
+        con.query(selectAllFromUsersWhereNome,[req.params.nome],function (error,rows,fields) {
             if (!req.params.nome) {
                 res.send('Parametro errado => /users/nome');
                 return;
@@ -54,12 +61,12 @@ app.get('/users/:nome?',function(req,res){
         console.log('There has been a problem with your fetch operation: ' + error.message);
     } 
 });
-//Login SELECT * FROM Users WHERE nome = 'name' AND senha = 'password'
+//no lugar das var colocar ? e no fim da query passar array de valores con.query("SELECT * FROM Users WHERE e-mail=? AND senha=?", [req.body.name, req.body.password]);
 app.post('/login',function(req,res){
     let resultado = req.body.senha + req.body.email
     var passwordHashed = md5(resultado);
     try {
-      con.query("SELECT * FROM Users WHERE email = '"+req.body.email+"' AND senha = '"+passwordHashed+"'",function (error,rows,fields) {
+      con.query(selectAllFromUsers,[req.body.email,passwordHashed],function (error,rows,fields) {
           if (rows.length == 0){
               res.status(203).send('Login falho');
           }
@@ -69,9 +76,8 @@ app.post('/login',function(req,res){
                   res.status(500).send('error');
               } 
               else{
-                  console.log(JSON.stringify(rows));
+                  console.log(rows);
                   res.status(201).json({'success':rows});
-
               }
           }
       });
@@ -84,9 +90,8 @@ app.post('/register',function(req,res){
     let resultado = req.body.senha + req.body.email
     let senhaHashed = md5(resultado);
     let data = req.body.dataNascimento;
-
     try {
-        con.query("select * from `Users` where email = '"+[req.body.email]+"'",function (error,rows,fields) {
+        con.query(selectAllFromUsersWhereEmail,[req.body.email],function (error,rows,fields) {
             if (rows.length == 0){
                 try {
                     con.query("INSERT INTO `Users` (`nome`,`email`,`senha`,`peso`,`objetivo`, `altura`,`dataNascimento`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+senhaHashed+"','"+req.body.peso+"','"+req.body.objetivo+"','"+req.body.altura+"','"+data+"')",function (error,rows,fields) {
@@ -121,42 +126,91 @@ app.post('/register',function(req,res){
     } 
 })
 //insertFood ->   nome, carboidrato, gordura, gordura, proteina, descricao
+const insertComidas = "INSERT INTO `comidas`(`nome`, `carboidratos`, `proteinas`, `gorduras`, `descricao`) VALUES ?;"
+const getlastIdComida = "SELECT `id` AS LastID FROM `comidas` WHERE `id` = @@Identity;"
+const insertIntoRelacaoComidas = "INSERT INTO `relacaoComidasSemana`(`idComida`, `idSemana`) VALUES ?;"
 app.post('/insertFood',function(req,res){
-    let nome = req.body.nome
-    let carboidratos = req.body.carboidratos
-    let gordura = req.body.gordura
-    let proteina = req.body.proteina
-    let descricao = req.body.descricao
-    let semana  = req.body.semana
-    let lastId = 0
+    let data = req.body;
+    let values = [];
+    let ids = []
+    data.forEach(val =>{
+        let localList = [];
+        localList.push(val.nome);
+        localList.push(val.carboidratos);
+        localList.push(val.proteina);
+        localList.push(val.gordura);
+        localList.push(val.descricao);
+        values.push(localList);
+    })
+    let tamanhoData = values.length;
+    let firstId = 0;
     try {
-        con.query("INSERT INTO `comidas`(`nome`, `carboidratos`, `proteinas`, `gorduras`, `descricao`) VALUES ('"+nome+"','"+carboidratos+"','"+proteina+"','"+gordura+"','"+descricao+"');SELECT `id` AS LastID FROM `comidas` WHERE `id` = @@Identity;",function (error,rows,fields) {
+        con.query(insertComidas+getlastIdComida,[values],function (error,rows,fields) {
             if(error){
                 res.json({'error':error});
             } 
             else{
                 rows[1].forEach(element => {
-                    lastId = element["LastID"]
+                    firstId = element["LastID"];   
                 });
-                con.query("INSERT INTO `relacaoComidasSemana`(`idComida`, `idSemana`) VALUES ('"+lastId+"','"+semana+"')",function (error,rows,fields) {
-                    if(error){
+                for (let i = firstId; i < firstId+tamanhoData; i++) {
+                    let localArray = [];
+                    localArray.push(i);
+                    localArray.push(1);
+                    ids.push(localArray);
+                }
+                console.log("ids dps for = "+ids)
+                con.query(insertIntoRelacaoComidas,[ids],function (error,rows,fields) {
+                    if(error){ 
                         res.json({'error':error});
                     } 
                     else{
                         res.json({"success":rows});
                     } 
                 })
-            }
+            }  
         });
     } catch (error) {
         res.json({'error':error});
     } 
-})
 
+
+    // let nome = req.body.nome
+    // let carboidratos = req.body.carboidratos
+    // let gordura = req.body.gordura
+    // let proteina = req.body.proteina
+    // let descricao = req.body.descricao
+    // let lastId = 0
+    // try {
+    //     con.query("INSERT INTO `comidas`(`nome`, `carboidratos`, `proteinas`, `gorduras`, `descricao`) VALUES ('"+nome+"','"+carboidratos+"','"+proteina+"','"+gordura+"','"+descricao+"');SELECT `id` AS LastID FROM `comidas` WHERE `id` = @@Identity;",function (error,rows,fields) {
+    //         if(error){
+    //             res.json({'error':error});
+    //         } 
+    //         else{
+    //             rows[1].forEach(element => {
+    //                 lastId = element["LastID"]
+    //             });
+    //             console.log("ULTIMO ID = "+lastId);
+    //             con.query("INSERT INTO `relacaoComidasSemana`(`idComida`, `idSemana`) VALUES ('"+lastId+"',1)",function (error,rows,fields) {
+    //                 if(error){
+    //                     res.json({'error':error});
+    //                 } 
+    //                 else{
+    //                     res.json({"success":rows});
+    //                 } 
+    //             })
+    //         }
+            
+            
+    //     });
+    // } catch (error) {
+    //     res.json({'error':error});
+    // } 
+})
 app.get('/listaComidas',function(req,res){
     let idsComidas = []
     try {
-        con.query("SELECT `idComida` FROM `relacaoComidasSemana` WHERE `idSemana`='1'",function (error,rows,fields) {
+        con.query(selectSemanaUm,function (error,rows,fields) {
             if(error){
                 res.json({'error':error});
             } 
