@@ -21,7 +21,7 @@ export default class DadosPerfil extends Component{
 
   clickCriarConta(){
     if(this.validarCamposPerfil()){
-      this.props._onClickCriarConta(this.state.nome, this.state.dataNascimento, this.state.altura, this.state.peso, this.state.pesoMeta);
+      this.props._onClickCriarConta(this.state.nome.trim(), this.state.dataNascimento.trim(), this.state.altura.trim(), this.state.peso.trim(), this.state.pesoMeta.trim());
     } 
   }
 
@@ -59,6 +59,7 @@ export default class DadosPerfil extends Component{
                             style={styles.input}
                             placeholder="Digite seu nome..."
                             placeholderTextColor="#ccc"
+                            autoCapitalize = 'words'
                             onChangeText={(nome) => this.setState({nome}) }
                             value={this.state.nome}
                         />
@@ -71,6 +72,7 @@ export default class DadosPerfil extends Component{
                             style={styles.input}
                             placeholder="Digite sua data de nascimento..."
                             placeholderTextColor="#ccc"
+                            autoCapitalize = 'none'
                             onChangeText={(dataNascimento) => this.setState({dataNascimento: dataNascimento}) }
                             value={this.state.dataNascimento}
                         />

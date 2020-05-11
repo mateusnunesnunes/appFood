@@ -22,7 +22,6 @@ export default class Cadastro extends Component{
       peso:'',
       pesoMeta:'',
 
-      status: 0
     }
 
     this.cadastrarUsuario = this.cadastrarUsuario.bind(this);
@@ -41,22 +40,22 @@ export default class Cadastro extends Component{
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-            name:  this.state.nome,
-            email: this.state.email,
-            dataNascimento:  this.state.dataNascimento,
-            senha: this.state.senha,
-            peso: this.state.peso,
-            objetivo: this.state.pesoMeta,
-            altura: this.state.altura
+            name:  this.state.nome.trim(),
+            email: this.state.email.trim(),
+            dataNascimento:  this.state.dataNascimento.trim(),
+            senha: this.state.senha.trim(),
+            peso: this.state.peso.trim(),
+            objetivo: this.state.pesoMeta.trim(),
+            altura: this.state.altura.trim()
       })
     })
-    .then(response => {
-      console.log("Status" + response.status);
-      this.setState({status: response.status});
-      response.json();
-    })
-    .then(response => {
-      if(this.state.status == 201){
+    .then(response => 
+      response.json().then(data => ({
+        data: data,
+        status: response.status
+    }))
+    ).then(response => {
+      if(response.status == 201){
         Alert.alert(
           "Sucesso", 
           "Usuário cadastrado!",
@@ -64,9 +63,9 @@ export default class Cadastro extends Component{
           { text: "OK", onPress: () => {this.redirectLogin(); this.setState({showDadosLogin: true})}}
           ]
         );
-      }else if(this.state.status == 203){
+      }else if(response.status == 203){
         Alert.alert("Atenção", "Já existe um usuário com o e-mail informado. Verifique seu e-mail e tente novamente");
-      } else if (this.state.status == 500){
+      } else if (response.status == 500){
         Alert.alert("Erro do sistema", "Aguarde um pouco e tente novamente");
       }else{
         Alert.alert("Erro", "Exceção não tratada, entre em contato com os desenvolvedores ou tente novamente mais tarde");

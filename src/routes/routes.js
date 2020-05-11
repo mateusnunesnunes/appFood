@@ -6,11 +6,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Login from '../../Login';
 import Cadastro from '../../Cadastro';
-import SearchFood from '../components/SearchFood';
 import DetalhesCardapio from '../../DetalhesCardapio';
 import DetalhesDiaDoCardapio from '../../DetalhesDiaDoCardapio';
 import PerfilDoUsuario from '../../PerfilDoUsuario';
 import DetalhesRefeicao from '../../DetalhesRefeicao';
+import SearchFood from '../../SearchFood';
 
 const Stack = createStackNavigator();
 
