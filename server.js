@@ -61,6 +61,7 @@ app.get('/users/:nome?',function(req,res){
         console.log('There has been a problem with your fetch operation: ' + error.message);
     } 
 });
+
 //no lugar das var colocar ? e no fim da query passar array de valores con.query("SELECT * FROM Users WHERE e-mail=? AND senha=?", [req.body.name, req.body.password]);
 app.post('/login',function(req,res){
     let resultado = req.body.senha + req.body.email
