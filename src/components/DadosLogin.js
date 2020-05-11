@@ -17,7 +17,7 @@ export default class DadosLogin extends Component{
 
   clickAvancar(){
     if (this.validarCamposLogin()){
-      this.props._onClickAvancar(this.state.email, this.state.senha, this.state.confirmSenha);
+      this.props._onClickAvancar(this.state.email.trim(), this.state.senha.trim(), this.state.confirmSenha.trim());
     }
     
   }
@@ -34,6 +34,12 @@ export default class DadosLogin extends Component{
     }
     if (estado.senha != estado.confirmSenha){
       Alert.alert("Atenção", "As senhas não conferem");
+      return false;
+    }
+
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(estado.email) === false) {
+      Alert.alert("Atenção", "O email preenchido é inválido");
       return false;
     }
     return true;
@@ -53,6 +59,7 @@ export default class DadosLogin extends Component{
                   style={styles.input}
                   placeholder="Digite seu e-mail..."
                   placeholderTextColor="#ccc"
+                  autoCapitalize = 'none'
                   onChangeText={(email) => this.setState({email}) }
                   value={this.state.email}
               />
@@ -65,6 +72,7 @@ export default class DadosLogin extends Component{
                   secureTextEntry={true}
                   placeholder="Digite sua senha..."
                   placeholderTextColor="#ccc"
+                  autoCapitalize = 'none'
                   onChangeText={(senha) => this.setState({senha}) }
                   value={this.state.senha}
               />
@@ -77,6 +85,7 @@ export default class DadosLogin extends Component{
                   secureTextEntry={true}
                   placeholder="Digite novamente sua senha..."
                   placeholderTextColor="#ccc"
+                  autoCapitalize = 'none'
                   onChangeText={(confirmSenha) => this.setState({confirmSenha}) }
                   value={this.state.confirmSenha}
               />
