@@ -11,9 +11,9 @@ export default class DetalhesRefeicao extends Component {
 
     this.state = {
       imagemDoCardapio: require("./Imagens/comida.jpg"),
-      titulo: 'Segunda-Feira',
+      titulo: '',
       text: '',
-      quantidadeCaloria: "1230"
+      quantidadeCaloria: ""
     }
   }
 

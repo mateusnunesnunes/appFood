@@ -63,7 +63,7 @@ export default class DetalhesCardapio extends Component {
           style={{ top: "2%", paddingBottom: 5, backgroundColor: "white", height: "30%" }}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity style={{ flex: 1, backgroundColor: "white" }} onPress={() => navigation.navigate("DetalhesDiaDoCardapio")} >
+              <TouchableOpacity style={{ flex: 1, backgroundColor: "white" }} onPress={() => navigation.navigate("DetalhesDiaDoCardapio",{titulo:"AAAAAA"})} >
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingBottom: 5, backgroundColor: "white", paddingTop: 5 }}>
                   <DetalhesCelula
                     diaDaSemana={item.diaDaSemana}
