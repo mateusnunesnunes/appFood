@@ -29,7 +29,7 @@ onPress={() => navigation.navigate("DetalhesRefeicao")}
     return (
       <SafeAreaView style={{backgroundColor:"white"}}>
         <TituloEImagemCardapio
-          titulo={"AAAAA"}
+          titulo={"AAAA"}
           imagemDoCardapio={this.state.imagemDoCardapio}
           quantidadeCaloria ={this.state.quantidadeCalorias}
         ></TituloEImagemCardapio>
