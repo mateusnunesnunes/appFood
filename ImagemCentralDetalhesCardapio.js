@@ -26,8 +26,8 @@ export default class DetalhesCardapio extends Component {
     return (
       <View style={styles.viewInicial}>
 
-        <View style={{ position:"absolute",flex: 1, top: 30, left: 19, alignItems: "center", height: "90%", width: "90%", paddingBottom: 5 }}>
-          <Image style={{ height: "100%", width: "90%", borderRadius: 8 }} source={require("./Imagens/comida.jpg")}></Image>
+        <View style={{ position:"absolute",flex: 1, top:10, left: 19, alignItems: "center", height: "90%", width: "90%", paddingBottom: 0 }}>
+          <Image style={{ height: "100%", width: "90%", borderRadius: 8 }} source={require("./src/Imagens/comida.jpg")}></Image>
         </View>
         <CelulaDetalhesCardapio
           titulo={"Tópico semana 1"}
@@ -44,12 +44,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#52FFBA",
     top: 0,
     left: 0,
-    height: "55%",
+    height: "50%",
     width: "100%",
     right: 0,
     bottom: 0,
     borderRadius: 10,
-    marginBottom: 5
+    borderTopLeftRadius:0,
+    borderTopRightRadius:0,
+    marginBottom: 0,
+    flex:3
   },
   ImageBackground: {
     height: "90%",

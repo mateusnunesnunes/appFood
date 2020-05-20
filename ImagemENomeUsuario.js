@@ -17,7 +17,7 @@ export default class ImagemENomeUsuario extends Component{
     return (
         <View style={{justifyContent: 'center',alignItems: 'center',height:"45%",backgroundColor:'#52FFBA'}}>
           <Image 
-              source={require('./Imagens/comida.jpg')}  
+              source={require('./src/Imagens/comida.jpg')}  
               style={{width:180,height:180,borderRadius: 180/ 2}} 
           />
           <Text style={this.nomeUsuario}>Nome do usuario</Text>

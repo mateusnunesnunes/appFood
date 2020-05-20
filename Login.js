@@ -4,15 +4,16 @@ import SessaoSingleton from './SessaoSingleton';
 
 export default class Login extends Component{
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
-      email:'gfjgabriel@gmail.com',
-      senha:'gab'
+      email:'',
+      senha:''
     }
   }
 
    _onClickLogin = async() => {
+     console.log("Cheguei login")
     if(this.state.email == "" || this.state.senha == ""){
       Alert.alert("Atenção", "Preencha todos os campos para continuar");
       return false;
@@ -33,6 +34,7 @@ export default class Login extends Component{
           status: response.status
       })
   )).then(response => {
+    console.log("Retorno")
       if(response.status == 201){
         SessaoSingleton.getInstance().setIsLogado(true);
         if(SessaoSingleton.getInstance().getIsLogado()){
@@ -87,6 +89,7 @@ export default class Login extends Component{
               <Text style={styles.texto}>Senha</Text>
               <TextInput
                   style={styles.input}
+                  secureTextEntry={true}
                   placeholder="Digite sua senha..."
                   placeholderTextColor="#ccc"
                   autoCapitalize = 'none'

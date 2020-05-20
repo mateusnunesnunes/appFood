@@ -10,7 +10,7 @@ export default class DetalhesRefeicao extends Component {
     super();
 
     this.state = {
-      imagemDoCardapio: require("./Imagens/comida.jpg"),
+      imagemDoCardapio: require("./src/Imagens/comida.jpg"),
       titulo: '',
       text: '',
       quantidadeCaloria: ""

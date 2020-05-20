@@ -1,5 +1,13 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image} from 'react-native';
+import ImagePicker from 'react-native-image-picker';
+
+const options = {
+  title: 'Select a photo',
+  takePhotoButtonTitle: 'Take a photo',
+  chooseFromLibraryButtonTitle: 'Choose from gallery',
+  quality: 1
+}
 
 export default class DadosPerfil extends Component{
 
@@ -11,7 +19,8 @@ export default class DadosPerfil extends Component{
       altura:'',
       peso:'',
       pesoMeta:'',
-        show:false
+      avatarSource: null
+      
     }
     this.clickVoltar = this.clickVoltar.bind(this);
     this.clickCriarConta = this.clickCriarConta.bind(this);
@@ -23,6 +32,27 @@ export default class DadosPerfil extends Component{
     if(this.validarCamposPerfil()){
       this.props._onClickCriarConta(this.state.nome.trim(), this.state.dataNascimento.trim(), this.state.altura.trim(), this.state.peso.trim(), this.state.pesoMeta.trim());
     } 
+  }
+
+  selectPhoto(){
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+    
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const source = { uri: response.uri };
+    
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+    
+        this.setState({
+          avatarSource: source,
+        });
+      }
+    });
   }
 
   clickVoltar(){
@@ -52,6 +82,32 @@ export default class DadosPerfil extends Component{
                     <View style={styles.viewTitulo}>
                         <Text style={styles.titulo}>Cadastro</Text>
                     </View>  
+
+                    <View style={styles.viewChooseImage}>
+                        <View style = {{}}
+                          >
+                          <Image 
+                            style={styles.image}
+                            source={this.state.avatarSource != null ? this.state.avatarSource : require('../Imagens/camera.jpg')}
+                          />
+                        </View>
+                      <View style={{ }}>
+                        <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
+                          <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+                                        justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2, marginTop:10}}
+                            >
+                            <Text style = {{color: 'black', fontWeight:'bold'}}>Select Photo</Text>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
+                          <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+                                        justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2, marginTop:10}}
+                            >
+                            <Text style = {{color: 'black', fontWeight:'bold'}}>Pick from gallery</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
 
                     <View style={styles.viewText}>
                         <Text style={styles.texto}>Nome</Text>
@@ -157,12 +213,24 @@ const styles = StyleSheet.create({
         paddingLeft:5,
         backgroundColor:'#FAFDFF'
       },
+      viewChooseImage:{
+        marginTop:30,
+        marginBottom:20,
+        //height: 100, 
+        width:'90%',
+        paddingLeft:5,
+        backgroundColor:'#FAFDFF',
+        //flexDirection:'row',
+      },
       viewButtons:{
         marginTop:50,
         height: 100, 
         width:'90%',
         paddingLeft:5,
         backgroundColor:'#FAFDFF'
+      },
+      viewButtonsImage:{
+
       },
       viewTitulo:{
         marginBottom:30,
@@ -187,4 +255,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize:15,
       },
+      image:{
+        height: 200,
+        width: 200,
+        alignContent: 'center',
+      }
 });

@@ -10,7 +10,7 @@ export default class Cadastro extends Component{
   constructor(){
     super();
     this.state = {
-      showDadosLogin: true,
+      showDadosLogin: false,
 
       email:'',
       senha:'',
