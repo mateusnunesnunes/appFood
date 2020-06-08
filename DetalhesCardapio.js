@@ -11,11 +11,11 @@ export default class DetalhesCardapio extends Component {
     super();
     this.state = {
       data: [
-        { id: "00", diaDaSemana: "Segunda-Feira", descricao: "Dieta baseada em frango", imagemCelula: require("./Imagens/comida.jpg"), calorias: 2000, base: "Frango" },
-        { id: "01", diaDaSemana: "Terça-Feira", descricao: "Dieta baseada em carne", imagemCelula: require("./Imagens/comida.jpg"), calorias: 2000, base: "Carne" },
-        { id: "02", diaDaSemana: "Quarta-Feira", descricao: "Dieta baseada em peixe", imagemCelula: require("./Imagens/comida.jpg"), calorias: 2000, base: "Peixe" },
-        { id: "03", diaDaSemana: "Quinta-Feira", descricao: "Dieta baseada em frango", imagemCelula: require("./Imagens/comida.jpg"), calorias: 2000, base: "Frango" },
-        { id: "04", diaDaSemana: "Sexta-Feira", descricao: "Dieta baseada em carne", imagemCelula: require("./Imagens/comida.jpg"), calorias: 2000, base: "Carne" }
+        { id: "00", diaDaSemana: "Segunda-Feira", descricao: "Dieta baseada em frango", imagemCelula: require("./Imagens/garfoEColher.jpg"), calorias: 2000, base: "Frango" },
+        { id: "01", diaDaSemana: "Terça-Feira", descricao: "Dieta baseada em carne", imagemCelula: require("./Imagens/garfoEColher.jpg"), calorias: 2000, base: "Carne" },
+        { id: "02", diaDaSemana: "Quarta-Feira", descricao: "Dieta baseada em peixe", imagemCelula: require("./Imagens/garfoEColher.jpg"), calorias: 2000, base: "Peixe" },
+        { id: "03", diaDaSemana: "Quinta-Feira", descricao: "Dieta baseada em frango", imagemCelula: require("./Imagens/garfoEColher.jpg"), calorias: 2000, base: "Frango" },
+        { id: "04", diaDaSemana: "Sexta-Feira", descricao: "Dieta baseada em carne", imagemCelula: require("./Imagens/garfoEColher.jpg"), calorias: 2000, base: "Carne" }
       ],
       imagemDoCardapio: require("./Imagens/comida.jpg"),
       titulo: 'Titulo',
@@ -23,16 +23,30 @@ export default class DetalhesCardapio extends Component {
       totalCalorias: "2500"
     }
   }
-  /*
-        
-      
 
-
-        
-  */
+  pegarComidaDaSemana(){
+    var result = fetch('localhost:4548/listaComidasCardapio', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => 
+      response.json().then(data => ({
+        data: data,
+        status: response.status
+    }))
+    ).then(response => {
+      let array = response.data.comidas;
+      console.log(array);
+    })
+    .catch(e => { console.log(e);});
+  }
 
   render() {
     const { navigation } = this.props;
+    this.pegarComidaDaSemana();
     return (
       <SafeAreaView style={{ backgroundColor: "white", height: "98%" }}>
 
@@ -44,14 +58,14 @@ export default class DetalhesCardapio extends Component {
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', top: "2%", left: 15 }}>
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', top: "2%" }}>
             <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap' }} onPress={() => navigation.navigate("Perfil")} >
-              <Text style={{ fontSize: 16, color: '#52FFBA' }}>Seu perfil</Text>
               <Icon
-                  name='account-circle'
-                  size={20}
-                  color='#52FFBA'
-                  style={{ height: 25, width: 25 }} />
+                name='account-circle'
+                size={20}
+                color='#52FFBA'
+                style={{ height: 25, width: 25 }} />
+              <Text style={{ fontSize: 16, color: '#52FFBA' }}>Seu perfil</Text>
             </TouchableOpacity>
-            <View style={{ position: "absolute", left:"230%" }}>
+            <View style={{ position: "absolute", left: "230%" }}>
               <TouchableOpacity style={{ flexDirection: 'row', flexWrap: 'wrap' }} onPress={() => navigation.navigate("SearchFood")} >
                 <Text style={{ fontSize: 16, color: '#52FFBA' }}>Adicionar mais</Text>
                 <Icon
@@ -78,7 +92,7 @@ export default class DetalhesCardapio extends Component {
           style={{ top: "2%", paddingBottom: 5, backgroundColor: "white", height: "30%" }}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity style={{ flex: 1, backgroundColor: "white" }} onPress={() => navigation.navigate("DetalhesDiaDoCardapio", { titulo: "AAAAAA" })} >
+              <TouchableOpacity style={{ flex: 1, backgroundColor: "white" }} onPress={() => navigation.navigate("DetalhesDiaDoCardapio", { titulo: item.diaDaSemana,caloriasCardapio: item.calorias})} >
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingBottom: 5, backgroundColor: "white", paddingTop: 5 }}>
                   <DetalhesCelula
                     diaDaSemana={item.diaDaSemana}

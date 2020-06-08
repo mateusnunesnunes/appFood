@@ -4,9 +4,8 @@ import ImagemENomeUsuario from "./ImagemENomeUsuario";
 import CelulaDetalhesDietaUsuario from "./CelulaDetalhesDietaUsuario";
 import CelulaDetalhesMetasUsuario from "./CelulaDetalhesMetasUsuario";
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-import SemanaPerfilUsuario from './SemanaPerfilUsuario';
 
-export default class DetalhesCardapio extends Component {
+export default class RefeicaoManha extends Component {
 
   constructor() {
     super();
@@ -27,14 +26,9 @@ export default class DetalhesCardapio extends Component {
   }
 
   render() {
-    const dataAtual = new Date().getDate();
-    const mesNumero = new Date().getMonth();
-    const mesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho","Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-    const nomeMesAtual = mesNomes[mesNumero];
 
     return (
-      <View style={{ flex: 1 }}>
-        <ImagemENomeUsuario></ImagemENomeUsuario>
+      <View style={{ flex: 1,top:"2%" }}>
         <SegmentedControlTab
           tabsContainerStyle={{
             backgroundColor: "#52FFBA", shadowColor: "#000",
@@ -43,32 +37,21 @@ export default class DetalhesCardapio extends Component {
               height: 2,
             }, shadowOpacity: 0.20, shadowRadius: 1.5, elevation: 2,
           }}
-          tabStyle={{ backgroundColor: "white", borderColor: "#52FFBA" }}
+          tabStyle={{ backgroundColor: "#52FFBA", borderColor: "white" }}
           tabTextStyle={{ color: "black", fontSize: 16 }}
           activeTabTextStyle={{ color: "black", fontSize: 16 }}
-          activeTabStyle={{ backgroundColor: "#52FFBA" }}
-          values={['Sua semana', 'Suas metas']}
+          activeTabStyle={{ backgroundColor: "white" }}
+          values={['Café da manhã', 'Almoço']}
           selectedIndex={this.state.selectedIndex}
           onTabPress={this.handleIndexChange}
         />
         {this.state.selectedIndex === 0 ?
           <View style={{ width: "100%",height:"100%", backgroundColor: "white" }}>
-            <CelulaDetalhesDietaUsuario
-              diaDoMes={dataAtual}
-              mes={nomeMesAtual}
-              quantidadeKcal="1000"
-            ></CelulaDetalhesDietaUsuario>
-            <SemanaPerfilUsuario></SemanaPerfilUsuario>
           </View>
-          : <View style={{ width: "100%", height:"100%",backgroundColor: "white" }}>
-            <CelulaDetalhesMetasUsuario
-              diaDoMes={dataAtual}
-              mes={nomeMesAtual}
-              pesoAtual={78}
-              pesoMeta={73}
-            >
-            </CelulaDetalhesMetasUsuario>
-          </View>}
+          : 
+          <View style={{ width: "100%", height:"100%",backgroundColor: "white" }}>
+          </View>
+        }
       </View>
     );
   }

@@ -25,7 +25,7 @@ export default function Routes() {
         <Stack.Screen name="DetalhesCardapio"   options={{title: 'Home',headerStyle: { backgroundColor: 'white' }, headerTintColor: 'black'}} component={DetalhesCardapio} />
         <Stack.Screen name="DetalhesDiaDoCardapio" options={{title: 'Horários',headerStyle: { backgroundColor: '#52FFBA' }, headerTintColor: 'black'}}  component={DetalhesDiaDoCardapio} />
         <Stack.Screen name="Perfil" options={{title: 'Seu perfil',headerStyle: { backgroundColor: 'white' }, headerTintColor: 'black'}} component={PerfilDoUsuario} />
-        <Stack.Screen name="DetalhesRefeicao"  component={DetalhesRefeicao} />
+        <Stack.Screen name="DetalhesRefeicao" options={{title: 'Refeição',headerStyle: { backgroundColor: 'white' }, headerTintColor: 'black'}} component={DetalhesRefeicao} />
       </Stack.Navigator>
     </NavigationContainer>
 

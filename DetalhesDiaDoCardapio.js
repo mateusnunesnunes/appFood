@@ -9,9 +9,9 @@ export default class DetalhesDiaDoCardapio extends Component {
     super();
     this.state = {
       data: [
-      { id: "00", diaDaSemana: "Manhã", descricao: "Dieta baseada em frango", imagemCelula: require("./Imagens/comida.jpg"),calorias:500,base:"Frango"},
-        { id: "01", diaDaSemana: "Tarde", descricao: "Dieta baseada em carne", imagemCelula: require("./Imagens/comida.jpg"),calorias:1000,base:"Carne"},
-        { id: "02", diaDaSemana: "Noite", descricao: "Dieta baseada em peixe", imagemCelula: require("./Imagens/comida.jpg"),calorias:500,base:"Peixe"}
+      { id: "00", diaDaSemana: "Manhã", descricao: "Dieta baseada em frango", imagemCelula: require("./Imagens/garfoEColher.jpg"),calorias:500,base:"Frango"},
+        { id: "01", diaDaSemana: "Tarde", descricao: "Dieta baseada em carne", imagemCelula: require("./Imagens/garfoEColher.jpg"),calorias:1000,base:"Carne"},
+        { id: "02", diaDaSemana: "Noite", descricao: "Dieta baseada em peixe", imagemCelula: require("./Imagens/garfoEColher.jpg"),calorias:500,base:"Peixe"}
       ],
       imagemDoCardapio: require("./Imagens/comida.jpg"),
       titulo: 'Segunda-Feira',
@@ -29,9 +29,9 @@ onPress={() => navigation.navigate("DetalhesRefeicao")}
     return (
       <SafeAreaView style={{backgroundColor:"white"}}>
         <TituloEImagemCardapio
-          titulo={"AAAA"}
+          titulo={this.props.route.params.titulo}
           imagemDoCardapio={this.state.imagemDoCardapio}
-          quantidadeCaloria ={this.state.quantidadeCalorias}
+          quantidadeCaloria ={this.props.route.params.caloriasCardapio}
         ></TituloEImagemCardapio>
         <FlatList
           data={this.state.data}
@@ -39,7 +39,7 @@ onPress={() => navigation.navigate("DetalhesRefeicao")}
           style={{ top: "5%", paddingBottom: 5,backgroundColor:"white",height:"60%" }}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity style={{ flex: 1,backgroundColor:"white" }}  >
+              <TouchableOpacity style={{ flex: 1,backgroundColor:"white" }} onPress={() => navigation.navigate("DetalhesRefeicao",{titulo:item.diaDaSemana,quantidadeCaloriaRefeicao:item.calorias})}  >
                 <View style={{ flex: 1, justifyContent: 'center',alignItems: 'center',paddingBottom: 5,backgroundColor:"white",paddingTop:5  }}>
                   <DetalhesCelula
                     diaDaSemana={item.diaDaSemana}
