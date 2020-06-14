@@ -14,9 +14,11 @@ export default class DetalhesCelula extends Component {
       text: ''
     }
   }
+  
 
 
   render() {
+    const { navigation } = this.props;
     return (
       <View style={styles.viewCelula}>
         <View style={{ top: 7,width:"70%" }}>

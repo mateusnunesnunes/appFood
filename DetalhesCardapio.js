@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, SafeAreaView, View, FlatList,StyleSheet,TouchableHighlight} from 'react-native';
+import { Text, TouchableOpacity, SafeAreaView, View, FlatList,StyleSheet,TouchableHighlight, TouchableHighlightBase} from 'react-native';
 import DetalhesCelula from './DetalhesCelula.js';
 import ImagemCentralDetalhesCardapio from "./ImagemCentralDetalhesCardapio";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -12,13 +12,13 @@ export default class DetalhesCardapio extends Component {
     super();
     this.state = {
       data: [
-        { id: "0", diaDaSemana: "Segunda-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")},
-        { id: "1", diaDaSemana: "Terça-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")},
-        { id: "2", diaDaSemana: "Quarta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")},
-        { id: "3", diaDaSemana: "Quinta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")},
-        { id: "4", diaDaSemana: "Sexta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")}
+        { id: "0", diaDaSemana: "Segunda-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg"),calorias:'1.712',base:'Começe bem o seu dia!'},
+        { id: "1", diaDaSemana: "Terça-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg"),calorias:'2.000',base:'Nada como um dia inteiro pela frente!'},
+        { id: "2", diaDaSemana: "Quarta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg"),calorias:'1.813',base:'Novo dia novas superações!'},
+        { id: "3", diaDaSemana: "Quinta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg"),calorias:'2.476',base:'Continue firme com AppFood!'},
+        { id: "4", diaDaSemana: "Sexta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg"),calorias:'2.089',base:'Final de semana chegando!'}
       ],
-      imagemDoCardapio: require("./src/Imagens/comida.jpg"),
+      imagemDoCardapio: require("./src/Imagens/comida2.png"),
       titulo: 'Titulo',
       text: '',
       totalCalorias: "2500",
@@ -61,11 +61,86 @@ export default class DetalhesCardapio extends Component {
     this.loadFoods();
   }
 
-  navigationAct(item){
-    console.log(item)
-    this.props.navigation.navigate("DetalhesDiaDoCardapio",{titulo:'tei',calorias:'300'})
+  foodOrganizerDay(foodOrigin,day){ 
+    let foodReturn = [];
+    let inicio = 0;
+    let fim = 5;
+    switch (day) {
+      case 'seg':
+        console.log("seg")
+        inicio = 0
+        fim = 5
+        break;
+      case 'ter':
+        console.log("ter")
+        inicio = 6
+        fim = 11
+        break;
+      case 'qua':
+        console.log("qua")
+        inicio = 12
+        fim = 17
+        break;
+      case 'qui':
+        console.log("qui")
+        inicio = 18
+        fim = 23
+        break;
+      case 'sex':
+        console.log("sex")
+        inicio = 24
+        fim = 29
+        break;
+      default:
+        console.log("nenhum")
+        console.log(inicio+"   "+fim)
+        break;
+    }
+    
+    foodOrigin.forEach(element => {
+      let index  =foodOrigin.indexOf(element);
+      if( index >= inicio && index <= fim ){
+        foodReturn.push(foodOrigin[index])
+      }
+    })
+    console.log(foodReturn)
+    return foodReturn;
   }
 
+
+  navigationAct(item){
+    let id = item.id;
+    let dia = ''
+    console.log("id = "+id)
+    switch (parseInt(id)) {
+      case 0:
+        console.log("seg")
+        dia = "seg"
+        break;
+      case 1:
+        console.log("ter")
+        dia = "ter"
+        break;
+      case 2:
+        console.log("qua")
+        dia = "qua"
+        break;
+      case 3:
+        console.log("qui")
+        dia = "qui"
+        break;
+      default:
+        console.log("sex")
+        dia = "sex"
+        break;
+    }
+    let arrayFood = this.state.foods;
+    let arrayFoodDay = this.foodOrganizerDay(arrayFood,dia);
+    console.log('indo '+item.diaDaSemana)
+    this.props.navigation.navigate("DetalhesDiaDoCardapio",{titulo:item.diaDaSemana,comidas:arrayFoodDay})
+    
+  }
+ 
   render() {
     const { navigation } = this.props;
     // this.pegarComidaDaSemana();
@@ -83,6 +158,7 @@ export default class DetalhesCardapio extends Component {
         />
 
         <ImagemCentralDetalhesCardapio
+         title={'Semana Fitness'}
           length={this.state.foods.length}
           kcal={this.state.kcal}
         >
@@ -148,7 +224,7 @@ export default class DetalhesCardapio extends Component {
                     descricao={item.descricao}
                     imagemCelula={item.imagemCelula}
                     calorias={item.calorias}
-                    base={'asd'}
+                    base={item.base}
                   >
                   </DetalhesCelula>
                 </View>

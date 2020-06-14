@@ -23,12 +23,12 @@ export default class DetalhesCardapio extends Component {
       <View style={styles.container}>
         
         <View style={{alignItems: "center", height: "90%", width: "90%", marginTop:40}}>
-          <Image style={{ height: "75%", width: "90%", borderRadius: 8 }} source={require("./src/Imagens/comida.jpg")}></Image>
+          <Image style={{ height: "75%", width: "90%", borderRadius: 8 }} source={require("./src/Imagens/comida3.png")}></Image>
         </View>
       
           <View style={[styles.card,{height:70,width:'70%',marginTop:-70,flexDirection:'row'}]} >
                   <View style={styles.viewCard}>
-                    <Text style={styles.text}>Semana Fitness</Text>
+                    <Text style={styles.text}>{this.props.title}</Text>
                     <Text style={[styles.text,{fontWeight:'normal',marginTop:10}]}>{this.props.length+" Pratos diversos!"}</Text>
                   </View>
                   <Text style={[styles.border]}></Text>

@@ -136,10 +136,8 @@ export default class CelulaDetalhesDietaUsuario extends Component {
 
   
 
-  buttonCalled(){
-    console.log('tei')
-  }
   render() {
+    const { navigation } = this.props;
     let hour = new Date().getHours();
     let day = new Date().getDay() - 1;
     let inicio = 0;
@@ -198,7 +196,7 @@ export default class CelulaDetalhesDietaUsuario extends Component {
               content={'Suas calorias semanais são: '+this.state.kcal}
             ></Card>
 
-            <TouchableHighlight onPress={() => {this.buttonCalled()}}>
+            <TouchableHighlight onPress={() => {navigation.navigate("SearchFood")}}>
                 <View>
                   
                   <Icon

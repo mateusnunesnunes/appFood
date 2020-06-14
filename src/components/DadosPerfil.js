@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image} from 'react-native';
-//import ImagePicker from 'react-native-image-picker';
-//var ImagePicker = require('react-native-image-picker');
-
+import PhotoProfile from './PhotoProfile';
 const options = {
   title: 'Select a photo',
   takePhotoButtonTitle: 'Take a photo',
@@ -59,6 +57,10 @@ export default class DadosPerfil extends Component{
     return true;
   }
 
+  getProfilePictureURL(){
+    console.log('tei')
+  }
+
   render() {
     return (
                 <View style={styles.body}>
@@ -67,31 +69,6 @@ export default class DadosPerfil extends Component{
                         <Text style={styles.titulo}>Cadastro</Text>
                     </View>  
 
-                    <View style={styles.viewChooseImage}>
-                        <View style = {{}}
-                          >
-                          <Image 
-                            style={styles.image}
-                            source={this.state.avatarSource != null ? this.state.avatarSource : require('../Imagens/camera.jpg')}
-                          />
-                        </View>
-                      <View style={{ }}>
-                        <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
-                          <View style = {{backgroundColor: '#fff', alignItems: 'center', 
-                                        justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2, marginTop:10}}
-                            >
-                            <Text style = {{color: 'black', fontWeight:'bold'}}>Select Photo</Text>
-                          </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
-                          <View style = {{backgroundColor: '#fff', alignItems: 'center', 
-                                        justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2, marginTop:10}}
-                            >
-                            <Text style = {{color: 'black', fontWeight:'bold'}}>Pick from gallery</Text>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
 
                     <View style={styles.viewText}>
                         <Text style={styles.texto}>Nome</Text>

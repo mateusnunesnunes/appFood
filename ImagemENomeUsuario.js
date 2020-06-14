@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, SafeAreaView,View,Image,FlatList,TextInput, TouchableWithoutFeedback, ViewBase} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-
+// import PhotoProfile from './src/components/PhotoProfile';
 export default class ImagemENomeUsuario extends Component{
 
   constructor(){
@@ -33,9 +33,10 @@ export default class ImagemENomeUsuario extends Component{
  
 
 
+          {/* <PhotoProfile style={{position: 'absolute',zIndex: 1}} SendProfilePictureURL={this.getProfilePictureURL} /> */}
 
           <Image 
-              source={require('./src/Imagens/comida.jpg')}  
+              source={require('./src/Imagens/usuario1.png')}  
               style={{
                 width:180,
                 height:180,

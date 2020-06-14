@@ -18,14 +18,14 @@ export default function Routes() {
   return (
     <NavigationContainer>
       
-      <Stack.Navigator initialRouteName="DetalhesCardapio" screenOptions={{ headerStyle: { backgroundColor: '#ccc' }, headerTintColor: '#FFF' }}>
+      <Stack.Navigator initialRouteName="DetalhesCardapio" screenOptions={{ headerStyle: { backgroundColor: '#ccc' }, headerTintColor: '#0FB830' }}>
         <Stack.Screen options={{ headerLeft: null }} name="Login" component={Login} />
-        <Stack.Screen name="SearchFood" options={{title: 'Pesquisar',headerStyle: { backgroundColor: '#52FFBA' }, headerTintColor: 'black'}} component={SearchFood}/>
+        <Stack.Screen name="SearchFood" options={{title: 'Pesquisar',headerStyle: { backgroundColor: 'white' }, headerTintColor: '#0FB830'}} component={SearchFood}/>
         <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerLeft: null }} />
-        <Stack.Screen name="DetalhesCardapio"   options={{title: 'Home',headerStyle: { backgroundColor: 'white' }, headerTintColor: 'black'}} component={DetalhesCardapio} />
-        <Stack.Screen name="DetalhesDiaDoCardapio" options={{title: 'Horários',headerStyle: { backgroundColor: '#52FFBA' }, headerTintColor: 'black'}}  component={DetalhesDiaDoCardapio} />
-        <Stack.Screen name="Perfil" options={{title: 'Seu perfil',headerStyle: { backgroundColor: 'white' }, headerTintColor: 'black'}} component={PerfilDoUsuario} />
-        <Stack.Screen name="DetalhesRefeicao" options={{title: 'Refeição',headerStyle: { backgroundColor: 'white' }, headerTintColor: 'black'}} component={DetalhesRefeicao} />
+        <Stack.Screen name="DetalhesCardapio"   options={{title: 'Home',headerStyle: { backgroundColor: 'white' }, headerTintColor: '#0FB830'}} component={DetalhesCardapio} />
+        <Stack.Screen name="DetalhesDiaDoCardapio" options={{title: 'Horários',headerStyle: { backgroundColor: 'white' }, headerTintColor: '#0FB830'}}  component={DetalhesDiaDoCardapio} />
+        <Stack.Screen name="Perfil" options={{title: 'Seu perfil',headerStyle: { backgroundColor: 'white' }, headerTintColor: '#0FB830'}} component={PerfilDoUsuario} />
+        <Stack.Screen name="DetalhesRefeicao" options={{title: 'Refeição',headerStyle: { backgroundColor: 'white' }, headerTintColor: '#0FB830'}} component={DetalhesRefeicao} />
       </Stack.Navigator>
     </NavigationContainer>
 
