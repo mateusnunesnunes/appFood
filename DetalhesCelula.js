@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   descricaoCaloria: {
     fontSize: 14,
-    color: "#52FFBA",
+    color: "#0FB830",
   },
   descricaoBase: {
     fontSize: 14,
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "black",
     left: 5,
+    fontWeight:'bold'
   },
   viewCelula: {
     alignItems: "center",
