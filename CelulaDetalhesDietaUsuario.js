@@ -88,6 +88,7 @@ export default class CelulaDetalhesDietaUsuario extends Component {
       default:
         break;
     }
+    
     foodOrigin.forEach(element => {
       let index  =foodOrigin.indexOf(element);
       if( index >= inicio && index <= fim ){
