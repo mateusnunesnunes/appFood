@@ -11,11 +11,11 @@ export default class DetalhesCardapio extends Component {
     super();
     this.state = {
       data: [
-        { id: "00", diaDaSemana: "Segunda-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
-        { id: "01", diaDaSemana: "Terça-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
-        { id: "02", diaDaSemana: "Quarta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
-        { id: "03", diaDaSemana: "Quinta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
-        { id: "04", diaDaSemana: "Sexta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")}
+        { id: "0", diaDaSemana: "Segunda-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
+        { id: "1", diaDaSemana: "Terça-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
+        { id: "2", diaDaSemana: "Quarta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
+        { id: "3", diaDaSemana: "Quinta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
+        { id: "4", diaDaSemana: "Sexta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")}
       ],
       imagemDoCardapio: require("./Imagens/comida.jpg"),
       titulo: 'Titulo',
@@ -60,7 +60,10 @@ export default class DetalhesCardapio extends Component {
     this.loadFoods();
   }
 
-  
+  navigationAct(item){
+    console.log(item)
+    this.props.navigation.navigate("DetalhesDiaDoCardapio",{titulo:'tei',calorias:'300'})
+  }
 
   render() {
     const { navigation } = this.props;
@@ -128,8 +131,8 @@ export default class DetalhesCardapio extends Component {
           keyExtractor={item => item.id}
           style={{ top: "2%", paddingBottom: 5, backgroundColor: "transparent", height: "30%" }}
           renderItem={({ item }) => {
-            return (
-              <TouchableOpacity style={{ flex: 1, backgroundColor: "transparent" }} onPress={() => navigation.navigate("DetalhesDiaDoCardapio", { titulo: item.diaDaSemana,caloriasCardapio: item.calorias})} >
+            return (//navigation.navigate("DetalhesDiaDoCardapio", { titulo: item.diaDaSemana,caloriasCardapio: item.calorias})
+              <TouchableOpacity style={{ flex: 1, backgroundColor: "transparent" }} onPress={() => this.navigationAct(item)} >
                 <View style={{ 
                   flex: 1, 
                   justifyContent: 'center',

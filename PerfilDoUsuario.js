@@ -37,7 +37,7 @@ export default class DetalhesCardapio extends Component {
   }
 
   loadUserInfo = () =>{
-    var result =  fetch('http://192.168.0.111:4548/users/1', {
+    var result =  fetch('http://192.168.100.4:4548/users/1', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

@@ -63,29 +63,35 @@ export default class CelulaDetalhesDietaUsuario extends Component {
     let foodReturn = [];
     let inicio = 0;
     let fim = 5;
-    day = 'Sex' //tirar
     switch (day) {
       case 'Seg':
+        console.log("seg")
         inicio = 0
         fim = 5
         break;
       case 'Ter':
+        console.log("ter")
         inicio = 6
         fim = 11
         break;
       case 'Qua':
+        console.log("qua")
         inicio = 12
         fim = 17
         break;
       case 'Qui':
+        console.log("qui")
         inicio = 18
         fim = 23
         break;
       case 'Sex':
+        console.log("sex")
         inicio = 24
         fim = 29
         break;
       default:
+        console.log("nenhum")
+        console.log(inicio+"   "+fim)
         break;
     }
     
@@ -95,6 +101,7 @@ export default class CelulaDetalhesDietaUsuario extends Component {
         foodReturn.push(foodOrigin[index])
       }
     })
+    console.log(foodReturn)
     return foodReturn;
   }
 
@@ -145,7 +152,7 @@ export default class CelulaDetalhesDietaUsuario extends Component {
     const diaNome = ["Dom","Seg","Ter","Qua","Qui","Sex","Sab"]
     
     const dia = diaNome[parseInt(new Date().getDay())];
-    
+    console.log("Dia mandando pra func = "+dia)
     let comidas = this.state.foods;
     let comidasDia = this.foodOrganizerDay(comidas,dia);
     let comidasHora = this.foodOrganizerHour(comidasDia,hour);
