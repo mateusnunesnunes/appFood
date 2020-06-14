@@ -19,6 +19,7 @@ export default class App extends Component{
     .then(res => res.json() )
     .then(res => {
       this.setState({
+        
         data:res.foods.food || []
       })
     })

@@ -36,24 +36,24 @@ const selectAllFromUsersWhereEmail = "select * from `Users` where email = ?";
 const selectSemanaUm = "SELECT `idComida` FROM `relacaoComidasSemana` WHERE `idSemana`='1'";
 
 
-app.get('/users/:nome?',function(req,res){
+app.get('/users/:id?',function(req,res){
     try {
-        con.query(selectAllFromUsersWhereNome,[req.params.nome],function (error,rows,fields) {
-            if (!req.params.nome) {
-                res.send('Parametro errado => /users/nome');
+        con.query("SELECT * FROM Users WHERE id = ?",[req.params.id],function (error,rows,fields) {
+            if (!req.params.id) {
+                res.json('Parametro errado => /users/id');
                 return;
             }
             if (rows.length == 0){
-                res.send('null');
+                res.json('null');
             }
             else{
                 if(error){
                     console.log(error);
-                    res.send('error');
+                    res.json('error');
                 } 
                 else{
                     console.log(rows);
-                    res.send(rows);
+                    res.json(rows);
                 }
             }
         });
@@ -64,17 +64,18 @@ app.get('/users/:nome?',function(req,res){
 
 //no lugar das var colocar ? e no fim da query passar array de valores con.query("SELECT * FROM Users WHERE e-mail=? AND senha=?", [req.body.name, req.body.password]);
 app.post('/login',function(req,res){
+    console.log("Server login")
     let resultado = req.body.senha + req.body.email
     var passwordHashed = md5(resultado);
     try {
       con.query(selectAllFromUsers,[req.body.email,passwordHashed],function (error,rows,fields) {
           if (rows.length == 0){
-              res.status(203).send('Login falho');
+              res.status(203).json({'falho':"erro"});
           }
           else{
               if(error){
                   console.log(error);
-                  res.status(500).send('error');
+                  res.status(500).json({'falho':"erro"});
               } 
               else{
                   console.log(rows);
@@ -95,7 +96,7 @@ app.post('/register',function(req,res){
         con.query(selectAllFromUsersWhereEmail,[req.body.email],function (error,rows,fields) {
             if (rows.length == 0){
                 try {
-                    con.query("INSERT INTO `Users` (`nome`,`email`,`senha`,`peso`,`objetivo`, `altura`,`dataNascimento`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+senhaHashed+"','"+req.body.peso+"','"+req.body.objetivo+"','"+req.body.altura+"','"+data+"')",function (error,rows,fields) {
+                    con.query("INSERT INTO `Users` (`nome`,`email`,`senha`,`peso`,`objetivo`, `altura`,`dataNascimento`,`foto`) VALUES ('"+req.body.name+"','"+req.body.email+"','"+senhaHashed+"','"+req.body.peso+"','"+req.body.objetivo+"','"+req.body.altura+"','"+data+"','"+req.body.foto+"')",function (error,rows,fields) {
                         if(error){
                             console.log(error);
                             res.status(500).json({'error':error});

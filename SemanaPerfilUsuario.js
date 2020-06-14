@@ -12,29 +12,29 @@ export default class SemanaPerfilUsuario extends Component {
   }
 
   OnPressSegunda() {
-    this.setState((state) => {
-      return {labelAMostra: "Segunda-Feira"}
-    });
+    // this.setState((state) => {
+    //   return {labelAMostra: "Segunda-Feira"}
+    // });
   }
   OnPressTerca() {
-    this.setState((state) => {
-      return {labelAMostra: "Terça-Feira"}
-    });
+    // this.setState((state) => {
+    //   return {labelAMostra: "Terça-Feira"}
+    // });
   }
   OnPressQuarta() {
-    this.setState((state) => {
-      return {labelAMostra: "Quarta-Feira"}
-    });
+    // this.setState((state) => {
+    //   return {labelAMostra: "Quarta-Feira"}
+    // });
   }
   OnPressQuinta() {
-    this.setState((state) => {
-      return {labelAMostra: "Quinta-Feira"}
-    });
+    // this.setState((state) => {
+    //   return {labelAMostra: "Quinta-Feira"}
+    // });
   }
   OnPressSexta() {
-    this.setState((state) => {
-      return {labelAMostra: "Sexta-Feira"}
-    });
+    // this.setState((state) => {
+    //   return {labelAMostra: "Sexta-Feira"}
+    // });
   }
 
   render() {
