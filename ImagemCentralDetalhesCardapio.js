@@ -23,7 +23,7 @@ export default class DetalhesCardapio extends Component {
       <View style={styles.container}>
         
         <View style={{alignItems: "center", height: "90%", width: "90%", marginTop:40}}>
-          <Image style={{ height: "75%", width: "90%", borderRadius: 8 }} source={require("./Imagens/comida.jpg")}></Image>
+          <Image style={{ height: "75%", width: "90%", borderRadius: 8 }} source={require("./src/Imagens/comida.jpg")}></Image>
         </View>
       
           <View style={[styles.card,{height:70,width:'70%',marginTop:-70,flexDirection:'row'}]} >

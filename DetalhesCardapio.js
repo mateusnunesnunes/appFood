@@ -12,11 +12,11 @@ export default class DetalhesCardapio extends Component {
     super();
     this.state = {
       data: [
-        { id: "0", diaDaSemana: "Segunda-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
-        { id: "1", diaDaSemana: "Terça-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
-        { id: "2", diaDaSemana: "Quarta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
-        { id: "3", diaDaSemana: "Quinta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")},
-        { id: "4", diaDaSemana: "Sexta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./Imagens/garfoEColher.jpg")}
+        { id: "0", diaDaSemana: "Segunda-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")},
+        { id: "1", diaDaSemana: "Terça-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")},
+        { id: "2", diaDaSemana: "Quarta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")},
+        { id: "3", diaDaSemana: "Quinta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")},
+        { id: "4", diaDaSemana: "Sexta-Feira", descricao: "6 Alimentos diversos!", imagemCelula: require("./src/Imagens/garfoEColher.jpg")}
       ],
       imagemDoCardapio: require("./src/Imagens/comida.jpg"),
       titulo: 'Titulo',

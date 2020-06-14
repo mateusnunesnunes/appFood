@@ -61,7 +61,7 @@ export default class SearchFood extends Component{
   loadFoods = () => {
     if(this.state.food != ""){
       this.setLoading(true);
-      fetch('http://192.168.15.9:1337/foods/search/'+this.state.food+'/1/50')
+      fetch('http://192.168.100.4:1337/foods/search/'+this.state.food+'/1/50')
       .then(res => res.json() )
       .then(res => {
         this.setState({
@@ -112,7 +112,7 @@ export default class SearchFood extends Component{
     this.setState({loading:bool});
   }
   async _onClickSalvar(){
-    var result = await fetch('http://192.168.15.9:4548/insertFood', {
+    var result = await fetch('http://192.168.100.4:4548/insertFood', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

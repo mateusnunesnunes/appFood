@@ -35,7 +35,7 @@ export default class ImagemENomeUsuario extends Component{
 
 
           <Image 
-              source={require('./Imagens/comida.jpg')}  
+              source={require('./src/Imagens/comida.jpg')}  
               style={{
                 width:180,
                 height:180,

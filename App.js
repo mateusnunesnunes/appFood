@@ -14,25 +14,11 @@ export default class App extends Component{
     }
   }
 
-  loadFoods = () => {
-    fetch('http://192.168.15.10:1337/foods/search/apple/1/50')
-    .then(res => res.json() )
-    .then(res => {
-      this.setState({
-        
-        data:res.foods.food || []
-      })
-    })
-  }
-
-  componentDidMount(){
-    this.loadFoods();
-  }
 
   render() {
     return (
       <Routes />
-      //<PieChartExample></PieChartExample>
+     
     );
   }
 }

@@ -36,7 +36,7 @@ export default class Grafico extends Component {
       numRefeicoesNoDia = 4
       objetivo = "perder";
     }
-    var result = fetch('http://192.168.15.9:4548/listaComidas', {
+    var result = fetch('http://192.168.100.4:4548/listaComidas', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -125,7 +125,7 @@ export default class Grafico extends Component {
   }
 
   loadUserInfo = () =>{
-    var result =  fetch('http://192.168.15.9:4548/users/'+SessaoSingleton.getInstance().getUserID(), {
+    var result =  fetch('http://192.168.100.4:4548/users/'+SessaoSingleton.getInstance().getUserID(), {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

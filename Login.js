@@ -18,7 +18,7 @@ export default class Login extends Component{
       Alert.alert("Atenção", "Preencha todos os campos para continuar");
       return false;
     } else {
-      var result = await fetch('http://192.168.15.9:4548/login', {
+      var result = await fetch('http://192.168.100.4:4548/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

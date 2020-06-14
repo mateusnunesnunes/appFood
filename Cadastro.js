@@ -33,7 +33,7 @@ export default class Cadastro extends Component{
   }
 
   async cadastrarUsuario(){
-    var result = await fetch('http://192.168.15.9:4548/register', {
+    var result = await fetch('http://192.168.100.4:4548/register', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
