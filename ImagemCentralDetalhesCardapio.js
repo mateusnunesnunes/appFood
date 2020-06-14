@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, TouchableHighlight, SafeAreaView, View, Image, FlatList, TextInput, TouchableWithoutFeedback, ViewBase } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableHighlight, SafeAreaView, View, Image, FlatList, TextInput, TouchableWithoutFeedback, ViewBase,Icon } from 'react-native';
 import CelulaDetalhesCardapio from './CelulaDetalhesCardapio';
+import Card from './src/components/Card'
+import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 export default class DetalhesCardapio extends Component {
@@ -11,49 +13,76 @@ export default class DetalhesCardapio extends Component {
       data: [],
       imagem: "",
       titulo: "",
-      text: ''
+      text: '',
     }
   }
-
-  pesquisar() {
-    alert("Clicado pesquisar");
-    
-  }
-
-  //"#52FFBA"
+  
 
   render() {
     return (
-      <View style={styles.viewInicial}>
-
-        <View style={{ position:"absolute",flex: 1, top: 30, left: 19, alignItems: "center", height: "90%", width: "90%", paddingBottom: 5 }}>
-          <Image style={{ height: "100%", width: "90%", borderRadius: 8 }} source={require("./Imagens/comida.jpg")}></Image>
+      <View style={styles.container}>
+        
+        <View style={{alignItems: "center", height: "90%", width: "90%", marginTop:40}}>
+          <Image style={{ height: "75%", width: "90%", borderRadius: 8 }} source={require("./Imagens/comida.jpg")}></Image>
         </View>
-        <CelulaDetalhesCardapio
-          titulo={"Tópico semana 1"}
-          base={"Semana 1"}
-          caloriasTotais={"14.000"}
-        ></CelulaDetalhesCardapio>
+      
+          <View style={[styles.card,{height:70,width:'70%',marginTop:-70,flexDirection:'row'}]} >
+                  <View style={styles.viewCard}>
+                    <Text style={styles.text}>Semana Fitness</Text>
+                    <Text style={[styles.text,{fontWeight:'normal',marginTop:10}]}>{this.props.length+" Pratos diversos!"}</Text>
+                  </View>
+                  <Text style={[styles.border]}></Text>
+                  <Text  style={[styles.textRight]} >{this.props.kcal+" Kcal"}</Text>
+          </View>
       </View>
 
     );
   }
 }
 const styles = StyleSheet.create({
-  viewInicial: {
-    backgroundColor: "#52FFBA",
-    top: 0,
-    left: 0,
-    height: "55%",
-    width: "100%",
-    right: 0,
-    bottom: 0,
-    borderRadius: 10,
-    marginBottom: 5
+  container:{
+    flex:1,
+    justifyContent:'center',
+    alignItems: 'center'
   },
-  ImageBackground: {
-    height: "90%",
-    width: "95%",
-    borderRadius: 8
+  card:{
+    alignItems: 'center',
+    justifyContent:'center',
+    margin: 20,
+    backgroundColor:'white',
+    borderRadius:6,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9,
+  },
+  text:{
+    textAlign:'center',
+    fontWeight:'bold',
+    fontSize:16,
+  },
+  border:{
+    height:'100%',
+    borderLeftWidth:2,
+    borderLeftColor:'lightgray',
+    borderRadius:2
+  },
+  textRight:{
+    width:'30%',
+    textAlign:'center',
+    fontWeight:'normal',
+    fontSize:16,
+    alignItems: 'center',
+  },
+  viewCard:{
+
+    width:'70%',
+    height:'100%',
+    alignItems: 'center',
+    marginTop:15
   }
 });

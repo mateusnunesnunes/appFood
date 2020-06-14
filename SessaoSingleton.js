@@ -15,10 +15,12 @@ export default class SessaoSingleton {
     }
 
     getUserID() {
+        console.log("teste ");
         return this._userID;
     }
 
     setUserID(id) {
+        
         this._userID = id;
     }
 

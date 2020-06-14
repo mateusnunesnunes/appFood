@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexGrow: 1,
     width: '75%',
-    height: "20%",
-    top:"70%",
+    height: "25%",
+    top:"73%",
     left:45,
     backgroundColor: 'white',
     borderRadius: 7,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: '30%',
     height: '100%',
-    borderRadius: 7,
+    borderRadius: 7
   }
 
 });
