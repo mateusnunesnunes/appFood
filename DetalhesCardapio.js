@@ -90,6 +90,7 @@ export default class DetalhesCardapio extends Component {
           <View style={[styles.card,{padding:10,width:'30%',height:50,marginTop:30,zIndex: 1,marginLeft:55,}]} >
                   <Text style={styles.text}>Sua semana</Text>  
                   
+                  
           </View>
           <View style={{padding:10,marginTop:30,zIndex: 1}}>
             
