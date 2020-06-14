@@ -36,24 +36,24 @@ const selectAllFromUsersWhereEmail = "select * from `Users` where email = ?";
 const selectSemanaUm = "SELECT `idComida` FROM `relacaoComidasSemana` WHERE `idSemana`='1'";
 
 
-app.get('/users/:nome?',function(req,res){
+app.get('/users/:id?',function(req,res){
     try {
-        con.query(selectAllFromUsersWhereNome,[req.params.nome],function (error,rows,fields) {
-            if (!req.params.nome) {
-                res.send('Parametro errado => /users/nome');
+        con.query("SELECT * FROM Users WHERE id = ?",[req.params.id],function (error,rows,fields) {
+            if (!req.params.id) {
+                res.json('Parametro errado => /users/id');
                 return;
             }
             if (rows.length == 0){
-                res.send('null');
+                res.json('null');
             }
             else{
                 if(error){
                     console.log(error);
-                    res.send('error');
+                    res.json('error');
                 } 
                 else{
                     console.log(rows);
-                    res.send(rows);
+                    res.json(rows);
                 }
             }
         });

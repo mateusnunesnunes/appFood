@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image} from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+//import ImagePicker from 'react-native-image-picker';
+//var ImagePicker = require('react-native-image-picker');
 
 const options = {
   title: 'Select a photo',
@@ -35,24 +36,7 @@ export default class DadosPerfil extends Component{
   }
 
   selectPhoto(){
-    ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
     
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        const source = { uri: response.uri };
-    
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-    
-        this.setState({
-          avatarSource: source,
-        });
-      }
-    });
   }
 
   clickVoltar(){
@@ -93,14 +77,14 @@ export default class DadosPerfil extends Component{
                         </View>
                       <View style={{ }}>
                         <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
-                          <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+                          <View style = {{backgroundColor: '#fff', alignItems: 'center', 
                                         justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2, marginTop:10}}
                             >
                             <Text style = {{color: 'black', fontWeight:'bold'}}>Select Photo</Text>
                           </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.selectPhoto.bind(this)}>
-                          <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+                          <View style = {{backgroundColor: '#fff', alignItems: 'center', 
                                         justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2, marginTop:10}}
                             >
                             <Text style = {{color: 'black', fontWeight:'bold'}}>Pick from gallery</Text>
@@ -173,7 +157,7 @@ export default class DadosPerfil extends Component{
                 
                     <View style={styles.viewButtons}>
                     <TouchableOpacity onPress = {this.clickCriarConta}>
-                        <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+                        <View style = {{backgroundColor: '#fff', alignItems: 'center', 
                                     justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2}}
                         >
                         <Text style = {{color: 'black', fontWeight:'bold'}}>Criar conta</Text>
@@ -184,7 +168,7 @@ export default class DadosPerfil extends Component{
                     </View>
 
                     <TouchableOpacity onPress = {this.clickVoltar}>
-                        <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+                        <View style = {{backgroundColor: '#fff', alignItems: 'center', 
                                     justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2}}
                         >
                         <Text style = {{color: 'black', fontWeight:'bold'}}>Voltar</Text>
@@ -211,7 +195,7 @@ const styles = StyleSheet.create({
         height: 40, 
         width:'90%',
         paddingLeft:5,
-        backgroundColor:'#FAFDFF'
+        backgroundColor:'#fff'
       },
       viewChooseImage:{
         marginTop:30,
@@ -219,7 +203,7 @@ const styles = StyleSheet.create({
         //height: 100, 
         width:'90%',
         paddingLeft:5,
-        backgroundColor:'#FAFDFF',
+        backgroundColor:'#fff',
         //flexDirection:'row',
       },
       viewButtons:{
@@ -227,7 +211,7 @@ const styles = StyleSheet.create({
         height: 100, 
         width:'90%',
         paddingLeft:5,
-        backgroundColor:'#FAFDFF'
+        backgroundColor:'#fff'
       },
       viewButtonsImage:{
 
@@ -240,7 +224,7 @@ const styles = StyleSheet.create({
         flex:1,
         alignItems: 'center',
         justifyContent:'center',
-        backgroundColor: '#FAFDFF',
+        backgroundColor: '#fff',
       },
       titulo:{
         fontSize:24,

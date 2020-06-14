@@ -4,6 +4,7 @@ import ImagemENomeUsuario from "./ImagemENomeUsuario";
 import CelulaDetalhesDietaUsuario from "./CelulaDetalhesDietaUsuario";
 import CelulaDetalhesMetasUsuario from "./CelulaDetalhesMetasUsuario";
 import SegmentedControlTab from 'react-native-segmented-control-tab'
+import Grafico from './Grafico';
 
 export default class DetalhesCardapio extends Component {
 
@@ -14,7 +15,7 @@ export default class DetalhesCardapio extends Component {
       imagem: "",
       titulo: "",
       text: '',
-      selectedIndex: 0
+      selectedIndex: 1
     }
   }
 
@@ -65,8 +66,14 @@ export default class DetalhesCardapio extends Component {
               pesoAtual={78}
               pesoMeta={73}
             >
+            
             </CelulaDetalhesMetasUsuario>
+            
+            <View style={{width: "90%", position:"absolute", top:120, left:20}}>
+            <Grafico/>
+            </View>
           </View>}
+          
       </View>
     );
   }

@@ -10,7 +10,7 @@ export default class Cadastro extends Component{
   constructor(){
     super();
     this.state = {
-      showDadosLogin: false,
+      showDadosLogin: true,
 
       email:'',
       senha:'',
@@ -33,7 +33,7 @@ export default class Cadastro extends Component{
   }
 
   async cadastrarUsuario(){
-    var result = await fetch('http://192.168.15.10:4548/register', {
+    var result = await fetch('http://192.168.15.9:4548/register', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -56,6 +56,7 @@ export default class Cadastro extends Component{
     }))
     ).then(response => {
       if(response.status == 201){
+        this.redirectLogin();
         Alert.alert(
           "Sucesso", 
           "Usuário cadastrado!",

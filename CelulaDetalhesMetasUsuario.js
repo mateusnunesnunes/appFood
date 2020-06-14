@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, SafeAreaView, View, Image, FlatList, TextInput, TouchableOpacity, TouchableWithoutFeedback, ViewBase } from 'react-native';
-
+import SessaoSingleton from './SessaoSingleton';
 export default class DetalhesCelula extends Component {
 
   constructor(props) {
@@ -11,12 +11,49 @@ export default class DetalhesCelula extends Component {
       mes: "",
       pesoRestante:0,
       pesoMeta:0,
-      
+      pesoAtual: 0
     }
   }
 
+  componentDidMount(){
+    this.loadUserInfo();
+  }
+
+  loadUserInfo(){
+    var result = fetch('http://192.168.15.9:4548/users/'+SessaoSingleton.getInstance().getUserID(), {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => 
+      response.json().then(data => ({
+        data: data,
+        status: response.status
+    }))
+    ).then(response => {
+      let userInfo = response.data;
+      this.setState({pesoAtual: userInfo[0].peso, pesoMeta: userInfo[0].objetivo})
+    })
+    .catch(e => { console.log(e);});
+  }
+
   render() {
-    const pesoFaltante = this.props.pesoAtual-this.props.pesoMeta
+    let pesoFaltante = 0;
+    let textoMeta = "";
+    if(this.state.pesoAtual == this.state.pesoMeta){
+      textoMeta = "Parabéns! Você atingiu o seu objetivo!";
+    }else if(this.state.pesoAtual < this.state.pesoMeta){
+      pesoFaltante = this.state.pesoMeta - this.state.pesoAtual;
+      pesoFaltante = Math.round(pesoFaltante * 100) / 100;
+      textoMeta = this.state.pesoAtual + " Kg, faltam "+pesoFaltante+" Kg para alcançar sua meta ("+this.state.pesoMeta+" Kg)";
+    }else{
+      pesoFaltante = this.state.pesoAtual - this.state.pesoMeta;
+      pesoFaltante = Math.round(pesoFaltante * 100) / 100;
+      textoMeta = this.state.pesoAtual + " Kg, faltam "+pesoFaltante+" Kg para alcançar sua meta ("+this.state.pesoMeta+" Kg)";
+    }
+    
     return (
       <View style={styles.viewCelula}>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
@@ -30,7 +67,7 @@ export default class DetalhesCelula extends Component {
           </View>
           <View style={{ width: "100%", height: 50, backgroundColor: "white",flexDirection: 'row', flexWrap: 'wrap' }}>
             <View style={{padding:5}}>
-              <Text style={styles.quantidadeKcal}>{this.props.pesoAtual + " Kg, faltam "+pesoFaltante+" Kg para alcançar sua meta"}</Text>
+              <Text style={styles.quantidadeKcal}>{textoMeta}</Text>
             </View>
           </View>
         </View>

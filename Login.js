@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View,TextInput, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, Text, View,TextInput, TouchableOpacity, Alert, Image} from 'react-native';
 import SessaoSingleton from './SessaoSingleton';
 
 export default class Login extends Component{
@@ -7,8 +7,8 @@ export default class Login extends Component{
   constructor(props){
     super(props);
     this.state = {
-      email:'',
-      senha:''
+      email:'gfjgabriel@gmail.com',
+      senha:'1234'
     }
   }
 
@@ -18,7 +18,7 @@ export default class Login extends Component{
       Alert.alert("Atenção", "Preencha todos os campos para continuar");
       return false;
     } else {
-      var result = await fetch('http://192.168.15.10:4548/login', {
+      var result = await fetch('http://192.168.15.9:4548/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -40,7 +40,8 @@ export default class Login extends Component{
         if(SessaoSingleton.getInstance().getIsLogado()){
           SessaoSingleton.getInstance().setUserID(response.data.success[0]["id"]);
           console.log(SessaoSingleton.getInstance().getUserID());
-          this.props.navigation.navigate('SearchFood');
+          //this.props.navigation.navigate('SearchFood');
+          this.props.navigation.navigate('Perfil');
         }
       }else if(response.status == 203){
         Alert.alert("Atenção", "O usuário informado não existe", [
@@ -64,10 +65,7 @@ export default class Login extends Component{
         
       <View style={styles.body} >
         <View style={styles.viewLogo}>
-          <Text
-          style={styles.logo}>
-            AppFood
-          </Text>
+        <Image style={{ height: "100%", width: "100%", borderRadius: 8 }} source={require("./src/Imagens/logo.png")}></Image>
         </View>
         
         <View style={styles.viewText}>
@@ -99,7 +97,7 @@ export default class Login extends Component{
           </View>
           <View style={styles.viewButtons}>
             <TouchableOpacity onPress = {() => {this._onClickLogin()}}>
-              <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+              <View style = {{backgroundColor: '#fff', alignItems: 'center', 
                             justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2}}
               >
                 <Text style = {{color: 'black', fontWeight:'bold'}}>Login</Text>
@@ -114,7 +112,7 @@ export default class Login extends Component{
             </View>
 
             <TouchableOpacity onPress = {() => this.props.navigation.navigate('Cadastro') }>
-              <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+              <View style = {{backgroundColor: '#fff', alignItems: 'center', 
                             justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2}}
               >
                 <Text style = {{color: 'black', fontWeight:'bold'}}>Criar conta</Text>
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: 'center',
     justifyContent:'center',
-    backgroundColor: '#FAFDFF',
+    backgroundColor: '#fff',
   },
   input:{
     height: 50, 
@@ -149,18 +147,20 @@ const styles = StyleSheet.create({
     height: 40, 
     width:'90%',
     paddingLeft:5,
-    backgroundColor:'#FAFDFF'
+    backgroundColor:'#fff'
   },
   viewTextNPossuiConta:{
     marginTop: 20, 
     marginBottom:10,
     width:'90%',
     paddingLeft:5,
-    backgroundColor:'#F5FCFF'
+    backgroundColor:'#fff'
   },
   viewLogo:{
     justifyContent: 'center',
     alignItems: 'center',
+    height:200,
+    width:200
   },
   logo:{
     color:'black',
@@ -183,6 +183,6 @@ const styles = StyleSheet.create({
     height: 100, 
     width:'90%',
     paddingLeft:5,
-    backgroundColor:'#FAFDFF'
+    backgroundColor:'#fff'
   },
 });

@@ -93,7 +93,7 @@ export default class DadosLogin extends Component{
 
           <View style={styles.viewButtons}>
             <TouchableOpacity onPress = {this.clickAvancar}>
-              <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+              <View style = {{backgroundColor: '#fff', alignItems: 'center', 
                             justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2}}
               >
                 <Text style = {{color: 'black', fontWeight:'bold'}}>Avançar</Text>
@@ -104,7 +104,7 @@ export default class DadosLogin extends Component{
             </View>
 
             <TouchableOpacity onPress = {this.clickCancelar}>
-              <View style = {{backgroundColor: '#FAFDFF', alignItems: 'center', 
+              <View style = {{backgroundColor: '#fff', alignItems: 'center', 
                             justifyContent: 'center', borderRadius: 15, height:40, borderColor:'#37db9a', borderWidth:2}}
               >
                 <Text style = {{color: 'black', fontWeight:'bold'}}>Cancelar</Text>
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: 'center',
     justifyContent:'center',
-    backgroundColor: '#FAFDFF',
+    backgroundColor: '#fff',
   },
   input:{
     height: 40, 
@@ -136,14 +136,14 @@ const styles = StyleSheet.create({
     height: 40, 
     width:'90%',
     paddingLeft:5,
-    backgroundColor:'#FAFDFF'
+    backgroundColor:'#fff'
   },
   viewButtons:{
     marginTop:50,
     height: 100, 
     width:'90%',
     paddingLeft:5,
-    backgroundColor:'#FAFDFF'
+    backgroundColor:'#fff'
   },
   viewTitulo:{
     marginBottom:30,
