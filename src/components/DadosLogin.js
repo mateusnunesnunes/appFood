@@ -9,6 +9,8 @@ export default class DadosLogin extends Component{
       email:'',
       senha:'',
       confirmSenha:'',
+      showAlert: false,
+      textAlert:""
     }
     this.clickAvancar = this.clickAvancar.bind(this);
     this.clickCancelar = this.clickCancelar.bind(this);
@@ -29,26 +31,38 @@ export default class DadosLogin extends Component{
   validarCamposLogin(){
     let estado = this.state;
     if(estado.email == "" || estado.senha == "" || estado.confirmSenha == ""){
-      Alert.alert("Atenção", "Preencha todos os campos para continuar");
+      this.setState({showAlert:true, textAlert: "Preencha todos os campos para continuar"});
       return false;
     }
     if (estado.senha != estado.confirmSenha){
-      Alert.alert("Atenção", "As senhas não conferem");
+      this.setState({showAlert:true, textAlert: "Atenção: As senhas não conferem"});
       return false;
     }
 
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (reg.test(estado.email) === false) {
-      Alert.alert("Atenção", "O email preenchido é inválido");
+      this.setState({showAlert:true, textAlert: "Atenção: O email preenchido é inválido"});
       return false;
     }
     return true;
   }
 
+  _renderAlert = () => {
+    if (this.state.showAlert) {
+        return (
+          <View style={styles.card} >
+            <Text style={styles.text}>{this.state.textAlert}</Text>
+          </View>
+        );
+    } else {
+        return null;
+    }
+}
   render() {
     return (
         
         <View style={styles.body}>
+          {this._renderAlert()}
           <View style={styles.viewTitulo}>
               <Text style={styles.titulo}>Cadastro</Text>
           </View>  
@@ -124,10 +138,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   input:{
-    height: 40, 
+    height: 50, 
+    fontSize:16,
     borderBottomColor:'#37db9a',
     borderBottomWidth: 1,
-    paddingLeft:5,
+    padding:10,
     color:'black',
   },
   viewText:{
@@ -165,5 +180,30 @@ const styles = StyleSheet.create({
   textoNPossuiConta:{
     color:'black',
     fontSize:12
+  },
+  card:{
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor:'white',
+    borderRadius:6,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9,
+    position:"absolute",
+    top:40
+  },
+  text:{
+    textAlign:'center',
+    padding:5,
+    margin:5,
+    fontWeight:'normal',
+    fontSize:13,
+    alignItems: 'center',
+    color:"red"
   }
 });

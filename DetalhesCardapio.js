@@ -4,6 +4,7 @@ import DetalhesCelula from './DetalhesCelula.js';
 import ImagemCentralDetalhesCardapio from "./ImagemCentralDetalhesCardapio";
 import { LinearGradient } from 'expo-linear-gradient';
 import { Divider,Icon } from 'react-native-elements';
+import SessaoSingleton from './SessaoSingleton.js';
 
 
 export default class DetalhesCardapio extends Component {
@@ -29,7 +30,7 @@ export default class DetalhesCardapio extends Component {
 
   loadFoods(){
     let kcal = 0;
-    var result = fetch('http://192.168.100.4:4548/listaComidas', {
+    var result = fetch('http://192.168.15.5:4548/listaComidas', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -140,6 +141,12 @@ export default class DetalhesCardapio extends Component {
     this.props.navigation.navigate("DetalhesDiaDoCardapio",{titulo:item.diaDaSemana,comidas:arrayFoodDay})
     
   }
+
+  logOut(){
+    SessaoSingleton.getInstance().setUserID(null);
+    SessaoSingleton.getInstance().setIsLogado(false);
+    this.props.navigation.navigate('Login');
+  }
  
   render() {
     const { navigation } = this.props;
@@ -164,7 +171,7 @@ export default class DetalhesCardapio extends Component {
         >
         </ImagemCentralDetalhesCardapio>
         <View style={{alignItems: "center",flexDirection:'row'}}>
-          <View style={[styles.card,{padding:10,width:'30%',height:50,marginTop:30,zIndex: 1,marginLeft:55,}]} >
+          <View style={[styles.card,{padding:10,width:'30%',height:50,marginTop:30,zIndex: 1,marginLeft:25,}]} >
                   <Text style={styles.text}>Sua semana</Text>  
                   
                   
@@ -179,7 +186,7 @@ export default class DetalhesCardapio extends Component {
                           name='user'
                           type='font-awesome'
                           color='#0FB830'
-                          containerStyle={{marginLeft: 30}}
+                          containerStyle={{marginLeft: 20}}
                           size={20}
                         />
                       </View>
@@ -193,7 +200,19 @@ export default class DetalhesCardapio extends Component {
                           name='plus'
                           type='font-awesome'
                           color='#0FB830'
-                          containerStyle={{marginLeft: 30}}
+                          containerStyle={{marginLeft: 20}}
+                          size={20}
+                        />
+                      </View>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={() => {this.logOut()}}>
+                      <View>
+                        <Icon
+                          raised
+                          name='sign-out'
+                          type='font-awesome'
+                          color='#0FB830'
+                          containerStyle={{marginLeft: 20}}
                           size={20}
                         />
                       </View>

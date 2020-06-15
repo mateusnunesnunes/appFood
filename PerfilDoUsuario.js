@@ -37,7 +37,7 @@ export default class DetalhesCardapio extends Component {
   }
 
   loadUserInfo = () =>{
-    var result =  fetch('http://192.168.100.4:4548/users/1', {
+    var result =  fetch('http://192.168.15.5:4548/users/'+SessaoSingleton.getInstance().getUserID(), {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -77,7 +77,7 @@ export default class DetalhesCardapio extends Component {
     }
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1}}>
         <ImagemENomeUsuario 
           nome={this.state.nome}
           idade={this.state.idade+' Anos '}
@@ -118,14 +118,15 @@ export default class DetalhesCardapio extends Component {
               diaStr={dia}
             ></CelulaDetalhesDietaUsuario>
           </View>
-          : <View style={{ width: "100%", height:"100%",backgroundColor: "white" }}>
+          : <View>
             <CelulaDetalhesMetasUsuario
-              
+              dia={dataAtual}
+              diaStr={dia}
             >
             
             </CelulaDetalhesMetasUsuario>
             
-            <View style={{width: "90%", position:"absolute", top:120, left:20}}>
+            <View style={{width: "90%", position:"absolute", top:70}}>
             <Grafico/>
             </View>
           </View>}

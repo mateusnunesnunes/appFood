@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View,TextInput, TouchableOpacity, Alert, Image} from 'react-native';
 import SessaoSingleton from './SessaoSingleton';
+import Card from './src/components/Card';
 
 export default class Login extends Component{
 
@@ -8,17 +9,20 @@ export default class Login extends Component{
     super(props);
     this.state = {
       email:'',
-      senha:''
+      senha:'',
+      showAlert: false,
+      textAlert:""
     }
+    this._renderAlert = this._renderAlert.bind(this);
   }
 
    _onClickLogin = async() => {
      console.log("Cheguei login")
     if(this.state.email == "" || this.state.senha == ""){
-      Alert.alert("Atenção", "Preencha todos os campos para continuar");
+      this.setState({showAlert:true, textAlert: "Preencha todos os campos para continuar"});
       return false;
     } else {
-      var result = await fetch('http://192.168.100.4:4548/login', {
+      var result = await fetch('http://192.168.15.5:4548/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -40,30 +44,37 @@ export default class Login extends Component{
         if(SessaoSingleton.getInstance().getIsLogado()){
           SessaoSingleton.getInstance().setUserID(response.data.success[0]["id"]);
           console.log(SessaoSingleton.getInstance().getUserID());
-          //this.props.navigation.navigate('SearchFood');
           this.props.navigation.navigate('Perfil');
         }
       }else if(response.status == 203){
-        Alert.alert("Atenção", "O usuário informado não existe", [
-          { text: "Cadastrar", onPress: () => {this.props.navigation.navigate('Cadastro')}},
-          {text: "Cancelar",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"}
-          ]);
+        this.setState({showAlert:true, textAlert: "O usuário informado não existe"});
       } else if (response.status == 500){
-        Alert.alert("Erro do sistema", "Aguarde um pouco e tente novamente");
+        this.setState({showAlert:true, textAlert: "Erro do sistema: Aguarde um pouco e tente novamente"});
       }else{
-        Alert.alert("Erro", "Exceção não tratada, entre em contato com os desenvolvedores ou tente novamente mais tarde");
+        this.setState({showAlert:true, textAlert: "Erro: Exceção não tratada, entre em contato com os desenvolvedores ou tente novamente mais tarde"});
       }
     })
     .catch(e => { console.log(e);Alert.alert("Erro do sistema", JSON.stringify(e)) });
     }
   }
 
+  _renderAlert = () => {
+    if (this.state.showAlert) {
+        return (
+          <View style={styles.card} >
+            <Text style={styles.text}>{this.state.textAlert}</Text>
+          </View>
+        );
+    } else {
+        return null;
+    }
+}
+
   render() {
     return (
         
       <View style={styles.body} >
+        {this._renderAlert("teste")}
         <View style={styles.viewLogo}>
         <Image style={{ height: "100%", width: "100%", borderRadius: 8 }} source={require("./src/Imagens/logo.png")}></Image>
         </View>
@@ -119,7 +130,7 @@ export default class Login extends Component{
               </View>
             </TouchableOpacity>
           </View>
-        
+         
         
       </View>
     );
@@ -135,7 +146,7 @@ const styles = StyleSheet.create({
   input:{
     height: 50, 
     fontSize:16,
-    padding:5,
+    padding:10,
     borderBottomColor:'#37db9a',
     borderBottomWidth: 1,
     paddingLeft:5,
@@ -185,4 +196,29 @@ const styles = StyleSheet.create({
     paddingLeft:5,
     backgroundColor:'#fff'
   },
+  card:{
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor:'white',
+    borderRadius:6,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9,
+    position:"absolute",
+    top:40
+  },
+  text:{
+    textAlign:'center',
+    padding:5,
+    margin:5,
+    fontWeight:'normal',
+    fontSize:13,
+    alignItems: 'center',
+    color:"red"
+  }
 });

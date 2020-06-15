@@ -11,7 +11,7 @@ var md5 = require('md5');
 //Conexao
 var con = mysql.createConnection({
     host :'localhost',
-    port:'8889',
+    port:'3307',
     user:'root',
     password:'root',
     database:'appFoods',

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, View, Alert,} from 'react-native';
+import {Platform, View, Alert,StyleSheet} from 'react-native';
 //import {FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
 
 
@@ -22,6 +22,9 @@ export default class Cadastro extends Component{
       peso:'',
       pesoMeta:'',
 
+      showAlert: false,
+      textAlert:""
+
     }
 
     this.cadastrarUsuario = this.cadastrarUsuario.bind(this);
@@ -33,7 +36,7 @@ export default class Cadastro extends Component{
   }
 
   async cadastrarUsuario(){
-    var result = await fetch('http://192.168.100.4:4548/register', {
+    var result = await fetch('http://192.168.15.5:4548/register', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -57,19 +60,12 @@ export default class Cadastro extends Component{
     ).then(response => {
       if(response.status == 201){
         this.redirectLogin();
-        Alert.alert(
-          "Sucesso", 
-          "Usuário cadastrado!",
-          [
-          { text: "OK", onPress: () => {this.redirectLogin(); this.setState({showDadosLogin: true})}}
-          ]
-        );
       }else if(response.status == 203){
-        Alert.alert("Atenção", "Já existe um usuário com o e-mail informado. Verifique seu e-mail e tente novamente");
+        this.setState({showAlert:true, textAlert: "Já existe um usuário com o e-mail informado. Verifique seu e-mail e tente novamente"});
       } else if (response.status == 500){
-        Alert.alert("Erro do sistema", "Aguarde um pouco e tente novamente");
+        this.setState({showAlert:true, textAlert: "Erro do sistema: Aguarde um pouco e tente novamente"});
       }else{
-        Alert.alert("Erro", "Exceção não tratada, entre em contato com os desenvolvedores ou tente novamente mais tarde");
+        this.setState({showAlert:true, textAlert: "Erro: Exceção não tratada, entre em contato com os desenvolvedores ou tente novamente mais tarde"});
       }
     })
     .catch(e => { console.log(e);Alert.alert("Erro do sistema", JSON.stringify(e)) });
@@ -93,6 +89,18 @@ export default class Cadastro extends Component{
     this.setState({showDadosLogin: true});
   }
 
+  _renderAlert = () => {
+    if (this.state.showAlert) {
+        return (
+          <View style={styles.card} >
+            <Text style={styles.text}>{this.state.textAlert}</Text>
+          </View>
+        );
+    } else {
+        return null;
+    }
+}
+
   _renderDados = () => {
     if(this.state.showDadosLogin){
       return(
@@ -108,8 +116,36 @@ export default class Cadastro extends Component{
   render() {
     return (
       <>
+      {this._renderAlert()}
       {this._renderDados()}
       </>
     );
   }
 }
+const styles = StyleSheet.create({
+  card:{
+    alignItems: 'center',
+    justifyContent:'center',
+    backgroundColor:'white',
+    borderRadius:6,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 9,
+    position:"absolute",
+    top:40
+  },
+  text:{
+    textAlign:'center',
+    padding:5,
+    margin:5,
+    fontWeight:'normal',
+    fontSize:13,
+    alignItems: 'center',
+    color:"red"
+  }
+});

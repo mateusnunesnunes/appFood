@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image} from 'react-native';
-import PhotoProfile from './PhotoProfile';
 const options = {
   title: 'Select a photo',
   takePhotoButtonTitle: 'Take a photo',
@@ -18,7 +17,9 @@ export default class DadosPerfil extends Component{
       altura:'',
       peso:'',
       pesoMeta:'',
-      avatarSource: null
+      avatarSource: null,
+      showAlert: false,
+      textAlert:""
       
     }
     this.clickVoltar = this.clickVoltar.bind(this);
@@ -46,12 +47,24 @@ export default class DadosPerfil extends Component{
 
   }
 
+  _renderAlert = () => {
+    if (this.state.showAlert) {
+        return (
+          <View style={styles.card} >
+            <Text style={styles.text}>{this.state.textAlert}</Text>
+          </View>
+        );
+    } else {
+        return null;
+    }
+}
+
   validarCamposPerfil(){
     let estado = this.state;
     if(estado.nome == "" || 
     estado.dataNascimento == "" || 
     estado.altura == "" || estado.peso == "" || estado.pesoMeta == ""){
-      Alert.alert("Atenção", "Preencha todos os campos para continuar");
+      this.setState({showAlert:true, textAlert: "Preencha todos os campos para continuar"});
       return false;
     }
     return true;
@@ -61,10 +74,14 @@ export default class DadosPerfil extends Component{
     console.log('tei')
   }
 
+  changeDate = (valor) => {
+    this.setState({dataNascimento:valor})
+  }
+
   render() {
     return (
                 <View style={styles.body}>
-
+{this._renderAlert()}
                     <View style={styles.viewTitulo}>
                         <Text style={styles.titulo}>Cadastro</Text>
                     </View>  
@@ -160,10 +177,11 @@ export default class DadosPerfil extends Component{
 }
 const styles = StyleSheet.create({
     input:{
-        height: 40, 
+      height: 50, 
+      fontSize:16,
         borderBottomColor:'#37db9a',
         borderBottomWidth: 2,
-        paddingLeft:5,
+        padding:10,
         color:'black',
       },
       viewText:{
@@ -220,5 +238,30 @@ const styles = StyleSheet.create({
         height: 200,
         width: 200,
         alignContent: 'center',
+      },
+      card:{
+        alignItems: 'center',
+        justifyContent:'center',
+        backgroundColor:'white',
+        borderRadius:6,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+        position:"absolute",
+        top:90
+      },
+      text:{
+        textAlign:'center',
+        padding:5,
+        margin:5,
+        fontWeight:'normal',
+        fontSize:13,
+        alignItems: 'center',
+        color:"red"
       }
 });

@@ -25,13 +25,9 @@ export default class CelulaDetalhesDietaUsuario extends Component {
     this.loadFoods();
   }
   
- 
-
-
-
   loadFoods(){
     let kcal = 0;
-    var result = fetch('http://192.168.100.4:4548/listaComidas', {
+    var result = fetch('http://192.168.15.5:4548/listaComidas', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

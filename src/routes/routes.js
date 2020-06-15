@@ -18,7 +18,7 @@ export default function Routes() {
   return (
     <NavigationContainer>
       
-      <Stack.Navigator initialRouteName="DetalhesCardapio" screenOptions={{ headerStyle: { backgroundColor: '#ccc' }, headerTintColor: '#0FB830' }}>
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerStyle: { backgroundColor: '#ccc' }, headerTintColor: '#0FB830' }}>
         <Stack.Screen options={{ headerLeft: null }} name="Login" component={Login} />
         <Stack.Screen name="SearchFood" options={{title: 'Pesquisar',headerStyle: { backgroundColor: 'white' }, headerTintColor: '#0FB830'}} component={SearchFood}/>
         <Stack.Screen name="Cadastro" component={Cadastro} options={{ headerLeft: null }} />

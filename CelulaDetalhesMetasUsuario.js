@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, SafeAreaView, View, Image, FlatList, TextInput, TouchableOpacity, TouchableWithoutFeedback, ViewBase } from 'react-native';
 import SessaoSingleton from './SessaoSingleton';
+import Card from './src/components/Card';
 export default class DetalhesCelula extends Component {
 
   constructor(props) {
@@ -20,7 +21,7 @@ export default class DetalhesCelula extends Component {
   }
 
   loadUserInfo(){
-    var result = fetch('http://192.168.100.4:4548/users/'+SessaoSingleton.getInstance().getUserID(), {
+    var result = fetch('http://192.168.15.5:4548/users/'+SessaoSingleton.getInstance().getUserID(), {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -55,21 +56,17 @@ export default class DetalhesCelula extends Component {
     }
     
     return (
-      <View style={styles.viewCelula}>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          <View style={{ width: "100%", height: 45, backgroundColor: "white" }}>
-            <View style={styles.viewColorida}>
-              <View style={{ backgroundColor: "#52FFBA", alignItems: "center", flexDirection: 'row', flexWrap: 'wrap' }}>
-                <Text style={styles.diaDoMes}>{this.props.diaDoMes}</Text>
-                <Text style={styles.mes}>{this.props.mes}</Text>
-              </View>
+      <View style={styles.container}>
+        <View style={[styles.container,{flexDirection:'row'}]}>
+            <View style={styles.date}>
+                  <Text style={styles.dayText}>{this.props.dia}</Text>
+                  <Text style={styles.dayStrText}>{this.props.diaStr}</Text>
             </View>
-          </View>
-          <View style={{ width: "100%", height: 50, backgroundColor: "white",flexDirection: 'row', flexWrap: 'wrap' }}>
-            <View style={{padding:5}}>
-              <Text style={styles.quantidadeKcal}>{textoMeta}</Text>
-            </View>
-          </View>
+            <Card 
+              height={40}
+              width={'60%'}
+              content={textoMeta}
+            ></Card>
         </View>
       </View>
     );
@@ -83,20 +80,10 @@ const styles = StyleSheet.create({
     top:3
   },
   viewCelula: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.5,
-    elevation: 2,
     flexGrow: 1,
     width: '90%',
-    height: 93,
-    top: 10,
+    height: 70,
     left: 20,
-    backgroundColor: 'white',
     position:"absolute"
   },
   diaDoMes: {
@@ -115,6 +102,22 @@ const styles = StyleSheet.create({
     height: "8%",
     backgroundColor: '#52FFBA',
     marginBottom: 20
-  }
+  },
+  container:{
+    flex:1,
+    justifyContent:'center',
+    alignItems: 'center'
+  },
+  date:{
+    padding: 5,
+    borderRadius:6,
+  },
+  dayText:{
+    fontWeight:'bold',
+    fontSize:20
+  },
+  dayStrText:{
+    fontSize:20
+  },
 
 });

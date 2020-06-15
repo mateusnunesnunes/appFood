@@ -25,7 +25,6 @@ export default class Grafico extends Component {
   loadFoods = ()  => {
     let numRefeicoesNoDia = 0;
     let objetivo = "";
-    console.log(this.state.data);
     if(this.state.pesoUser == this.state.objetivoUser){ // manter peso
       numRefeicoesNoDia = 5
       objetivo = "manter";
@@ -36,7 +35,7 @@ export default class Grafico extends Component {
       numRefeicoesNoDia = 4
       objetivo = "perder";
     }
-    var result = fetch('http://192.168.100.4:4548/listaComidas', {
+    var result = fetch('http://192.168.15.5:4548/listaComidas', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -65,7 +64,6 @@ export default class Grafico extends Component {
         diaSemana = 5
       let limiteComidasDiasCorridos = numRefeicoesNoDia * diaSemana;
       let limiteComidasSemanaToda = numRefeicoesNoDia * 5;
-      console.log(carbTot, protTot, gordTot);
       for(var contadorComidasSemana = 0;contadorComidasSemana<limiteComidasSemanaToda;contadorComidasSemana++){
 
         let carb = array[contadorComidasSemana].carboidratos.replace(" Carbs: ", "").replace("g","").replace(",",".").trim();
@@ -83,8 +81,6 @@ export default class Grafico extends Component {
         carbTotSemana = Math.round(carbTotSemana * 100) / 100;
         protTotSemana = Math.round(protTotSemana * 100) / 100;
         gordTotSemana = Math.round(gordTotSemana * 100) / 100;
-
-        console.log("carbTotSemana, protTotSemana, gordTotSemana",carbTotSemana, protTotSemana, gordTotSemana);
 
         if(contadorComidasSemana < limiteComidasDiasCorridos){
           if(contadorComidasDia == numRefeicoesNoDia && objetivo == "perder"){
@@ -125,7 +121,7 @@ export default class Grafico extends Component {
   }
 
   loadUserInfo = () =>{
-    var result =  fetch('http://192.168.100.4:4548/users/'+SessaoSingleton.getInstance().getUserID(), {
+    var result =  fetch('http://192.168.15.5:4548/users/'+SessaoSingleton.getInstance().getUserID(), {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -140,7 +136,6 @@ export default class Grafico extends Component {
     ).then(response => {
       let userInfo = response.data;
       this.setState({pesoUser: userInfo[0].peso, objetivoUser: userInfo[0].objetivo})
-      console.log("primeiro aqui");
     })
     .catch(e => { console.log(e);});
   }
@@ -149,15 +144,17 @@ export default class Grafico extends Component {
     
     return (
       <>
+      {/*Dimensions.get('window').width-(Dimensions.get('window').width*20/100)+50*/}
+      <View style={{flexDirection:'row'}}>
       <View style={styles.card}>
-        <Text style={{color:"#227B22", marginBottom:10, fontWeight:"normal"}}>{'\u2B24'} Proteínas: {Math.round(Number(this.state.protTotalConsumido/this.state.protTotalSemana*100) * 100) / 100}%</Text>
-        <Text style={{color:"#448F44", marginBottom:10, fontWeight:"normal"}}>{'\u2B24'} Carboidratos: {Math.round(Number(this.state.carbTotalConsumido/this.state.carbTotalSemana*100) * 100) / 100}%</Text>
-        <Text style={{color:"#66A366", marginBottom:10, fontWeight:"normal"}}>{'\u2B24'} Gorduras: {Math.round(Number(this.state.gordTotalConsumido/this.state.gordTotalSemana*100) * 100) / 100}%</Text>      
+        <Text style={[styles.labels, {color:"#227B22"}]}>{'\u2B24'} Proteínas: {Math.round(Number(this.state.protTotalConsumido/this.state.protTotalSemana*100) * 100) / 100}%</Text>
+        <Text style={[styles.labels, {color:"#448F44"}]}>{'\u2B24'} Carboidratos: {Math.round(Number(this.state.carbTotalConsumido/this.state.carbTotalSemana*100) * 100) / 100}%</Text>
+        <Text style={[styles.labels, {color:"#66A366"}]}>{'\u2B24'} Gorduras: {Math.round(Number(this.state.gordTotalConsumido/this.state.gordTotalSemana*100) * 100) / 100}%</Text>      
       <ProgressChart
           data={this.state.data ? this.state.data : null}
-          width={Dimensions.get('window').width+50}
-          height={250}
-          strokeWidth={16}
+          width={Dimensions.get('window').width-(Dimensions.get('window').width*20/100)+80}
+          height={200}
+          strokeWidth={12}
           radius={32}
           chartConfig={{
               backgroundColor: '#fff',
@@ -181,6 +178,7 @@ export default class Grafico extends Component {
             }}
           hideLegend={true}
         />
+      </View>
       </View>
       </>
     );
@@ -207,5 +205,9 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.32,
       shadowRadius: 15.46,
       elevation: 9,
+    },
+    labels:{
+      marginBottom:10, 
+      fontWeight:"normal"
     }
 });
