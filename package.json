@@ -23,7 +23,7 @@
     "md5": "^2.2.1",
     "mysql": "^2.18.1",
     "mysqli": "^3.0.11",
-    "nodemailer": "^6.4.6",
+    "nodemailer": "^6.4.16",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "query-string": "^6.13.1",
