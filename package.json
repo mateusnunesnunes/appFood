@@ -25,7 +25,7 @@
     "mysqli": "^3.0.11",
     "nodemailer": "^6.4.6",
     "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0",
+    "passport-jwt": "^4.0.1",
     "query-string": "^6.13.1",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
